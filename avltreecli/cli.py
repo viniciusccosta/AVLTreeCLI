@@ -244,6 +244,18 @@ class AVLTreeCLI:
                 self._show_hint()
                 return
 
+            elif cmd == "preorder":
+                self._show_preorder()
+                return
+
+            elif cmd == "inorder":
+                self._show_inorder()
+                return
+
+            elif cmd == "postorder":
+                self._show_postorder()
+                return
+
             elif cmd == "help":
                 self.show_help()
                 return
@@ -942,6 +954,9 @@ class AVLTreeCLI:
         rprint("  redo                  - Redo undone action")
         rprint("  status                - Show configuration and tree status")
         rprint("  hint                  - Show balancing hints (practice mode)")
+        rprint("  preorder              - Show preorder traversal")
+        rprint("  inorder               - Show inorder traversal")
+        rprint("  postorder             - Show postorder traversal")
         rprint("  help                  - Show this")
         rprint("  exit                  - Quit")
         rprint("\n[bold]Configuration:[/bold]")
@@ -953,6 +968,57 @@ class AVLTreeCLI:
         rprint("\n[bold]Visual Indicators:[/bold]")
         rprint("  [bright_green]Green nodes[/bright_green]  - Recently added")
         rprint("  [red]Red nodes[/red]    - Unbalanced (need rotation)")
+
+    def _show_preorder(self):
+        """Show preorder traversal of the tree"""
+        if not self.tree.root:
+            rprint("[yellow]Tree is empty[/yellow]")
+            return
+
+        traversal = []
+        self._preorder_traversal(self.tree.root, traversal)
+        rprint(f"[bold]Preorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
+
+    def _show_inorder(self):
+        """Show inorder traversal of the tree"""
+        if not self.tree.root:
+            rprint("[yellow]Tree is empty[/yellow]")
+            return
+
+        traversal = []
+        self._inorder_traversal(self.tree.root, traversal)
+        rprint(f"[bold]Inorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
+
+    def _show_postorder(self):
+        """Show postorder traversal of the tree"""
+        if not self.tree.root:
+            rprint("[yellow]Tree is empty[/yellow]")
+            return
+
+        traversal = []
+        self._postorder_traversal(self.tree.root, traversal)
+        rprint(f"[bold]Postorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
+
+    def _preorder_traversal(self, node, traversal):
+        """Perform preorder traversal: root -> left -> right"""
+        if node:
+            traversal.append(node.value)
+            self._preorder_traversal(node.left, traversal)
+            self._preorder_traversal(node.right, traversal)
+
+    def _inorder_traversal(self, node, traversal):
+        """Perform inorder traversal: left -> root -> right"""
+        if node:
+            self._inorder_traversal(node.left, traversal)
+            traversal.append(node.value)
+            self._inorder_traversal(node.right, traversal)
+
+    def _postorder_traversal(self, node, traversal):
+        """Perform postorder traversal: left -> right -> root"""
+        if node:
+            self._postorder_traversal(node.left, traversal)
+            self._postorder_traversal(node.right, traversal)
+            traversal.append(node.value)
 
 
 def main():
