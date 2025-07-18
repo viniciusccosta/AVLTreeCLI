@@ -159,6 +159,8 @@ class AVLTreeCLI:
                         self.tree.root = self.tree.left_rotate(node)
                     else:
                         self._rotate_node_and_update_parent(node, "left")
+                    # Update heights throughout the tree after manual rotation
+                    self._update_all_heights(self.tree.root)
                     rprint(f"[green]Performed left rotation on node {value}[/green]")
                 elif direction == "right":
                     # Find parent to properly update tree structure
@@ -166,6 +168,8 @@ class AVLTreeCLI:
                         self.tree.root = self.tree.right_rotate(node)
                     else:
                         self._rotate_node_and_update_parent(node, "right")
+                    # Update heights throughout the tree after manual rotation
+                    self._update_all_heights(self.tree.root)
                     rprint(f"[green]Performed right rotation on node {value}[/green]")
                 else:
                     rprint("[red]Use 'left' or 'right'[/red]")
@@ -369,6 +373,20 @@ class AVLTreeCLI:
         else:
             # This shouldn't happen as we check for root above
             self.tree.root = rotated_node
+
+    def _update_all_heights(self, node):
+        """Update heights for all nodes in the tree (post-order traversal)"""
+        if not node:
+            return
+
+        # Update children first
+        self._update_all_heights(node.left)
+        self._update_all_heights(node.right)
+
+        # Update current node's height
+        node.height = 1 + max(
+            self.tree.get_height(node.left), self.tree.get_height(node.right)
+        )
 
     def _handle_config(self, args):
         """Handle configuration commands"""
@@ -784,30 +802,53 @@ class AVLTreeCLI:
         if not node:
             return False
 
-        # Check if this node is actually unbalanced
+        # First, check if this node itself is unbalanced and needs the specified rotation
         balance = self.tree.get_balance(node)
-        if abs(balance) <= 1:
-            return False
+        if abs(balance) > 1:
+            # Check if the rotation direction is correct for this unbalanced node
+            if balance > 1 and direction == "right":
+                # Left-heavy, right rotation might be correct
+                left_balance = self.tree.get_balance(node.left)
+                return left_balance >= 0  # Simple right rotation
+            elif balance < -1 and direction == "left":
+                # Right-heavy, left rotation might be correct
+                right_balance = self.tree.get_balance(node.right)
+                return right_balance <= 0  # Simple left rotation
 
-        # Check if the rotation direction is correct
-        if balance > 1 and direction == "right":
-            # Left-heavy, right rotation might be correct
-            left_balance = self.tree.get_balance(node.left)
-            return left_balance >= 0  # Simple right rotation
-        elif balance > 1 and direction == "left" and node.left:
-            # Left-heavy, left rotation on left child (for LR case)
-            left_balance = self.tree.get_balance(node.left)
-            return left_balance < 0
-        elif balance < -1 and direction == "left":
-            # Right-heavy, left rotation might be correct
-            right_balance = self.tree.get_balance(node.right)
-            return right_balance <= 0  # Simple left rotation
-        elif balance < -1 and direction == "right" and node.right:
-            # Right-heavy, right rotation on right child (for RL case)
-            right_balance = self.tree.get_balance(node.right)
-            return right_balance > 0
+        # Second, check if this is the correct first step in a double rotation
+        # We need to find an unbalanced ancestor that would need this rotation as part of its balancing
+        unbalanced_ancestor = self._find_unbalanced_ancestor_needing_rotation(
+            node, direction
+        )
+        return unbalanced_ancestor is not None
 
-        return False
+    def _find_unbalanced_ancestor_needing_rotation(self, node, direction):
+        """Find an unbalanced ancestor that needs the given rotation on this node as first step"""
+        # Search for an unbalanced ancestor
+        current = self.tree.root
+
+        while current:
+            balance = self.tree.get_balance(current)
+            if abs(balance) > 1:
+                # Found an unbalanced node, check if it needs this rotation
+                if balance > 1 and direction == "left" and current.left == node:
+                    # Left-heavy ancestor, needs left rotation on left child (LR case)
+                    left_balance = self.tree.get_balance(current.left)
+                    return current if left_balance < 0 else None
+                elif balance < -1 and direction == "right" and current.right == node:
+                    # Right-heavy ancestor, needs right rotation on right child (RL case)
+                    right_balance = self.tree.get_balance(current.right)
+                    return current if right_balance > 0 else None
+
+            # Continue searching down the tree towards the node
+            if node.value < current.value:
+                current = current.left
+            elif node.value > current.value:
+                current = current.right
+            else:
+                break
+
+        return None
 
     def _show_status(self):
         """Show current configuration and tree status"""
