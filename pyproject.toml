@@ -1,6 +1,6 @@
 [project]
 name = "avltreecli"
-version = "0.1.1"
+version = "0.1.2"
 description = "Learn and test AVL trees with a rich CLI grid-based visualizer."
 authors = [
     {name = "viniciusccosta",email = "viniciusccosta95@gmail.com"}
