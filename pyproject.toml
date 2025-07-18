@@ -1,0 +1,17 @@
+[project]
+name = "avltreecli"
+version = "0.1.0"
+description = "Learn and test AVL trees with a rich CLI grid-based visualizer."
+authors = [
+    {name = "viniciusccosta",email = "viniciusccosta95@gmail.com"}
+]
+readme = "README.md"
+requires-python = "~3.13"
+dependencies = [
+    "rich (>=14.0.0,<15.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
