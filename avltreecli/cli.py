@@ -1,3 +1,5 @@
+from typing import Any, Dict, List, Optional
+
 from rich import print as rprint
 from rich.console import Console
 
@@ -5,20 +7,49 @@ from .avl_tree import AVLTree, Node
 
 
 class AVLTreeCLI:
-    def __init__(self):
-        self.tree = AVLTree()
-        self.console = Console()
+    """
+    Interactive command-line interface for practicing AVL tree operations.
+
+    This CLI provides two learning modes:
+    - Automatic mode: Tree automatically balances after insertions/deletions
+    - Practice mode: User manually applies rotations with guided hints
+
+    Features include visual tree display, step-by-step balancing guidance,
+    multiple command chaining, and tree traversal operations.
+
+    Attributes:
+        tree (AVLTree): The AVL tree instance
+        console (Console): Rich console for colored output
+        auto_show_tree (bool): Whether to display tree after each command
+        mode (str): Current mode ("automatic" or "practice")
+        show_steps (bool): Whether to show step-by-step rotation details
+        recently_added (Optional[int]): Value of recently added node for highlighting
+        recently_removed (Optional[int]): Value of recently removed node for highlighting
+    """
+
+    def __init__(self) -> None:
+        """Initialize the AVL Tree CLI with default settings."""
+        self.tree: AVLTree = AVLTree()
+        self.console: Console = Console()
 
         # Configuration settings
-        self.auto_show_tree = True  # Show tree after every command
-        self.mode = "automatic"  # Modes: "automatic", "practice"
-        self.show_steps = True  # Show each step during automatic rotations
+        self.auto_show_tree: bool = True  # Show tree after every command
+        self.mode: str = "automatic"  # Modes: "automatic", "practice"
+        self.show_steps: bool = True  # Show each step during automatic rotations
 
         # Visual enhancements
-        self.recently_added = None  # Track the most recently added node
-        self.recently_removed = None  # Track the most recently removed node
+        self.recently_added: Optional[int] = None  # Track the most recently added node
+        self.recently_removed: Optional[int] = (
+            None  # Track the most recently removed node
+        )
 
-    def run(self):
+    def run(self) -> None:
+        """
+        Main CLI loop that handles user input and command processing.
+
+        Displays welcome message and continuously processes user commands
+        until the user types 'exit'.
+        """
         self.console.clear()
         rprint("[bold green]AVL Tree Practice Tool[/bold green]")
         rprint(f"[bold]Mode:[/bold] {self.mode.title()}")
@@ -31,7 +62,13 @@ class AVLTreeCLI:
                 break
             self.process_command_line(command_line)
 
-    def process_command_line(self, command_line):
+    def process_command_line(self, command_line: str) -> None:
+        """
+        Process a line that may contain multiple commands.
+
+        Args:
+            command_line (str): The input line containing one or more commands
+        """
         """Process a line that may contain multiple commands"""
         if not command_line:
             return
@@ -44,7 +81,19 @@ class AVLTreeCLI:
                 return
             self.process_command(command)
 
-    def _parse_multiple_commands(self, command_line):
+    def _parse_multiple_commands(self, command_line: str) -> List[str]:
+        """
+        Parse a command line into individual commands.
+
+        Supports command chaining by parsing space-separated commands and their arguments.
+        Handles single-word commands, commands with one argument, and multi-argument commands.
+
+        Args:
+            command_line (str): The input line to parse
+
+        Returns:
+            List[str]: List of individual command strings
+        """
         """Parse a command line into individual commands"""
         commands = []
         parts = command_line.split()
@@ -91,7 +140,16 @@ class AVLTreeCLI:
 
         return commands
 
-    def process_command(self, command):
+    def process_command(self, command: str) -> None:
+        """
+        Process a single command with its arguments.
+
+        Handles all supported commands including add, delete, rotate, config,
+        display, status, hint, traversals, and utility commands.
+
+        Args:
+            command (str): The command string to process
+        """
         parts = command.split()
         if not parts:
             return
@@ -314,7 +372,14 @@ class AVLTreeCLI:
         except ValueError:
             rprint("[red]Invalid number[/red]")
 
-    def display_tree(self):
+    def display_tree(self) -> None:
+        """
+        Display the tree in a fancy grid format with visual connectors.
+
+        Creates a visual representation of the AVL tree using a grid layout
+        with connecting lines and color-coded nodes. Empty trees display
+        a simple message.
+        """
         """Display the tree in a fancy grid format with visual connectors"""
         if not self.tree.root:
             rprint("[yellow]Tree is empty[/yellow]")
@@ -400,7 +465,20 @@ class AVLTreeCLI:
         # Print the fancy grid with colors and connectors
         self._print_fancy_grid_colored(grid)
 
-    def _calculate_level_positions(self, level, height, cols):
+    def _calculate_level_positions(
+        self, level: int, height: int, cols: int
+    ) -> List[int]:
+        """
+        Calculate positions for nodes at a specific level using mathematical formula.
+
+        Args:
+            level (int): The tree level (0-indexed, root is level 0)
+            height (int): Total height of the tree
+            cols (int): Total number of columns in the grid
+
+        Returns:
+            List[int]: List of column positions for nodes at this level
+        """
         """Calculate positions for nodes at a specific level using the mathematical formula"""
         nodes_at_level = 2**level
 
@@ -424,7 +502,21 @@ class AVLTreeCLI:
 
         return positions
 
-    def _get_tree_levels_with_positions(self, root):
+    def _get_tree_levels_with_positions(
+        self, root: Optional[Node]
+    ) -> List[List[Optional[Node]]]:
+        """
+        Get nodes organized by level in breadth-first order.
+
+        Includes None placeholders for missing nodes to maintain tree structure
+        in the visual representation.
+
+        Args:
+            root (Optional[Node]): The root node of the tree
+
+        Returns:
+            List[List[Optional[Node]]]: List of levels, each containing nodes and None placeholders
+        """
         """Get nodes organized by level in breadth-first order, including None for missing nodes"""
         if not root:
             return []
@@ -448,7 +540,17 @@ class AVLTreeCLI:
 
         return levels
 
-    def _rotate_node_and_update_parent(self, node, direction):
+    def _rotate_node_and_update_parent(self, node: Node, direction: str) -> None:
+        """
+        Rotate a node and update its parent's reference.
+
+        Finds the parent of the target node and updates the appropriate
+        child reference after rotation to maintain tree structure.
+
+        Args:
+            node (Node): The node to rotate
+            direction (str): Direction of rotation ("left" or "right")
+        """
         """Rotate a node and update its parent's reference"""
         # Find the parent of the node
         parent = None
@@ -477,7 +579,16 @@ class AVLTreeCLI:
             # This shouldn't happen as we check for root above
             self.tree.root = rotated_node
 
-    def _update_all_heights(self, node):
+    def _update_all_heights(self, node: Optional[Node]) -> None:
+        """
+        Update heights for all nodes in the tree using post-order traversal.
+
+        Recursively updates heights starting from leaves and working up to root.
+        This is necessary after manual rotations to ensure correct balance factors.
+
+        Args:
+            node (Optional[Node]): The root of the subtree to update
+        """
         """Update heights for all nodes in the tree (post-order traversal)"""
         if not node:
             return
@@ -491,7 +602,15 @@ class AVLTreeCLI:
             self.tree.get_height(node.left), self.tree.get_height(node.right)
         )
 
-    def _handle_config(self, args):
+    def _handle_config(self, args: List[str]) -> None:
+        """
+        Handle configuration commands for changing CLI settings.
+
+        Supports settings for auto-show tree, steps display, and mode switching.
+
+        Args:
+            args (List[str]): List of arguments [setting, value]
+        """
         """Handle configuration commands"""
         if len(args) < 2:
             rprint("[red]Usage: config <setting> <value>[/red]")
@@ -537,7 +656,16 @@ class AVLTreeCLI:
         else:
             rprint("[red]Unknown setting. Use: autoshow, mode, or steps[/red]")
 
-    def _insert_with_auto_balance(self, value):
+    def _insert_with_auto_balance(self, value: int) -> None:
+        """
+        Insert a value with automatic balancing and step-by-step display.
+
+        First inserts the value without balancing to show the unbalanced state,
+        then applies rotations step by step if show_steps is enabled.
+
+        Args:
+            value (int): The value to insert
+        """
         """Insert with automatic balancing and step-by-step display"""
         # First insert without auto-balancing to show unbalanced state
         self.tree.root = self._insert_manual(self.tree.root, value)
@@ -555,7 +683,16 @@ class AVLTreeCLI:
         # Now check and apply rotations step by step
         self._balance_tree_with_steps()
 
-    def _delete_with_auto_balance(self, value):
+    def _delete_with_auto_balance(self, value: int) -> None:
+        """
+        Delete a value with automatic balancing and step-by-step display.
+
+        First deletes the value without balancing to show the unbalanced state,
+        then applies rotations step by step if show_steps is enabled.
+
+        Args:
+            value (int): The value to delete
+        """
         """Delete with automatic balancing and step-by-step display"""
         # First delete without auto-balancing to show unbalanced state
         self.tree.root = self._delete_manual(self.tree.root, value)
@@ -573,7 +710,20 @@ class AVLTreeCLI:
         # Now check and apply rotations step by step
         self._balance_tree_with_steps()
 
-    def _insert_manual(self, node, value):
+    def _insert_manual(self, node: Optional[Node], value: int) -> Node:
+        """
+        Insert a value without automatic balancing.
+
+        Standard BST insertion that updates heights but doesn't apply rotations.
+        Used in practice mode and as first step in automatic mode.
+
+        Args:
+            node (Optional[Node]): Root of subtree to insert into
+            value (int): Value to insert
+
+        Returns:
+            Node: Root of subtree after insertion
+        """
         """Insert without automatic balancing"""
         if not node:
             return Node(value)
@@ -587,7 +737,20 @@ class AVLTreeCLI:
         )
         return node
 
-    def _delete_manual(self, node, value):
+    def _delete_manual(self, node: Optional[Node], value: int) -> Optional[Node]:
+        """
+        Delete a value without automatic balancing.
+
+        Standard BST deletion that updates heights but doesn't apply rotations.
+        Used in practice mode and as first step in automatic mode.
+
+        Args:
+            node (Optional[Node]): Root of subtree to delete from
+            value (int): Value to delete
+
+        Returns:
+            Optional[Node]: Root of subtree after deletion
+        """
         """Delete without automatic balancing"""
         if not node:
             return node
@@ -609,7 +772,13 @@ class AVLTreeCLI:
         )
         return node
 
-    def _balance_tree_with_steps(self):
+    def _balance_tree_with_steps(self) -> None:
+        """
+        Balance the tree step by step, showing each rotation.
+
+        Continuously finds and balances unbalanced nodes until the entire
+        tree is balanced. Shows detailed step information if enabled.
+        """
         """Balance the tree step by step, showing each rotation"""
         step = 1
         while True:
@@ -654,7 +823,22 @@ class AVLTreeCLI:
 
             step += 1
 
-    def _balance_node_and_update_root_with_steps(self, target_node, step_num):
+    def _balance_node_and_update_root_with_steps(
+        self, target_node: Node, step_num: int
+    ) -> Node:
+        """
+        Balance a specific node showing individual rotation steps.
+
+        Handles both single and double rotations with detailed step visualization
+        for educational purposes.
+
+        Args:
+            target_node (Node): The unbalanced node to balance
+            step_num (int): Current step number for display
+
+        Returns:
+            Node: The root of the tree after balancing
+        """
         """Balance a specific node showing individual rotation steps"""
         # Find the parent of the target node
         parent = None
@@ -756,7 +940,16 @@ class AVLTreeCLI:
 
         return self.tree.root
 
-    def _balance_node_and_update_root(self, target_node):
+    def _balance_node_and_update_root(self, target_node: Node) -> Node:
+        """
+        Balance a specific node and properly update the tree structure.
+
+        Args:
+            target_node (Node): The node to balance
+
+        Returns:
+            Node: The root of the tree after balancing
+        """
         """Balance a specific node and properly update the tree structure"""
         # We need to find the parent of the target node to update the reference
         parent = None
@@ -783,7 +976,16 @@ class AVLTreeCLI:
 
         return self.tree.root
 
-    def _find_unbalanced_node(self, node):
+    def _find_unbalanced_node(self, node: Optional[Node]) -> Optional[Node]:
+        """
+        Find the first unbalanced node using post-order traversal.
+
+        Args:
+            node (Optional[Node]): Root of subtree to search
+
+        Returns:
+            Optional[Node]: First unbalanced node found, or None if tree is balanced
+        """
         """Find the first unbalanced node in post-order traversal"""
         if not node:
             return None
@@ -804,7 +1006,16 @@ class AVLTreeCLI:
 
         return None
 
-    def _get_all_unbalanced_nodes(self, node):
+    def _get_all_unbalanced_nodes(self, node: Optional[Node]) -> List[int]:
+        """
+        Get all unbalanced nodes in the tree.
+
+        Args:
+            node (Optional[Node]): Root of subtree to search
+
+        Returns:
+            List[int]: List of values of all unbalanced nodes
+        """
         """Get all unbalanced nodes in the tree"""
         unbalanced = []
         if not node:
@@ -821,7 +1032,19 @@ class AVLTreeCLI:
 
         return unbalanced
 
-    def _get_node_color(self, node_value, unbalanced_nodes):
+    def _get_node_color(
+        self, node_value: int, unbalanced_nodes: List[int]
+    ) -> Optional[str]:
+        """
+        Determine the color for a node based on its status.
+
+        Args:
+            node_value (int): Value of the node
+            unbalanced_nodes (List[int]): List of unbalanced node values
+
+        Returns:
+            Optional[str]: Color name for the node, or None for default color
+        """
         """Determine the color for a node based on its status"""
         if node_value == self.recently_added:
             return "bright_green"  # Recently added node in bright green
@@ -830,7 +1053,16 @@ class AVLTreeCLI:
         else:
             return None  # Default color (no special coloring)
 
-    def _balance_node(self, node):
+    def _balance_node(self, node: Optional[Node]) -> Optional[Node]:
+        """
+        Balance a specific node and return the new root.
+
+        Args:
+            node (Optional[Node]): The node to balance
+
+        Returns:
+            Optional[Node]: The new root after balancing
+        """
         """Balance a specific node and return the new root"""
         if not node:
             return node
@@ -851,7 +1083,13 @@ class AVLTreeCLI:
 
         return node
 
-    def _check_balance_and_guide(self):
+    def _check_balance_and_guide(self) -> None:
+        """
+        Check if tree is balanced and provide guidance in practice mode.
+
+        Displays the balance status and suggests using the hint command
+        if the tree is unbalanced.
+        """
         """Check if tree is balanced and provide warning in practice mode"""
         unbalanced_node = self._find_unbalanced_node(self.tree.root)
         if unbalanced_node:
@@ -865,7 +1103,13 @@ class AVLTreeCLI:
         else:
             rprint("[green]Tree is balanced![/green]")
 
-    def _show_hint(self):
+    def _show_hint(self) -> None:
+        """
+        Show hints for balancing the tree in practice mode.
+
+        Analyzes the first unbalanced node and provides specific rotation
+        suggestions based on the balance factors.
+        """
         """Show hints for balancing the tree"""
         unbalanced_node = self._find_unbalanced_node(self.tree.root)
         if not unbalanced_node:
@@ -899,7 +1143,20 @@ class AVLTreeCLI:
                     f"[yellow]→ First 'rotate right {unbalanced_node.right.value}', then 'rotate left {unbalanced_node.value}' (Right-Left case)[/yellow]"
                 )
 
-    def _is_rotation_needed(self, value, direction):
+    def _is_rotation_needed(self, value: int, direction: str) -> bool:
+        """
+        Check if a rotation on the given node is the correct next step.
+
+        Validates whether the specified rotation is appropriate for balancing
+        the tree in practice mode.
+
+        Args:
+            value (int): Value of the node to rotate
+            direction (str): Direction of rotation ("left" or "right")
+
+        Returns:
+            bool: True if the rotation is needed and correct, False otherwise
+        """
         """Check if a rotation on the given node is the correct next step"""
         node = self.tree.search(value)
         if not node:
@@ -925,7 +1182,21 @@ class AVLTreeCLI:
         )
         return unbalanced_ancestor is not None
 
-    def _find_unbalanced_ancestor_needing_rotation(self, node, direction):
+    def _find_unbalanced_ancestor_needing_rotation(
+        self, node: Node, direction: str
+    ) -> Optional[Node]:
+        """
+        Find an unbalanced ancestor that needs the given rotation as first step.
+
+        Used for validating double rotation sequences in practice mode.
+
+        Args:
+            node (Node): The node that would be rotated
+            direction (str): Direction of the proposed rotation
+
+        Returns:
+            Optional[Node]: Unbalanced ancestor if rotation is correct, None otherwise
+        """
         """Find an unbalanced ancestor that needs the given rotation on this node as first step"""
         # Search for an unbalanced ancestor
         current = self.tree.root
@@ -972,15 +1243,29 @@ class AVLTreeCLI:
         else:
             rprint(f"\n[bold]Tree Status:[/bold] Empty")
 
-    def _get_tree_height(self, node):
-        """Calculate the height of the tree"""
+    def _get_tree_height(self, node: Optional[Node]) -> int:
+        """
+        Calculate the height of the tree.
+
+        Args:
+            node (Optional[Node]): Root of the subtree
+
+        Returns:
+            int: Height of the tree (0 for empty tree)
+        """
         if not node:
             return 0
         return 1 + max(
             self._get_tree_height(node.left), self._get_tree_height(node.right)
         )
 
-    def _print_fancy_grid(self, grid):
+    def _print_fancy_grid(self, grid: List[List[str]]) -> None:
+        """
+        Print the grid in fancy tabulate/grid style.
+
+        Args:
+            grid (List[List[str]]): 2D grid of cell values
+        """
         """Print the grid in fancy tabulate/grid style"""
         if not grid:
             return
@@ -997,7 +1282,13 @@ class AVLTreeCLI:
             rprint(f"[cyan]{row_str}[/cyan]")
             rprint(f"[cyan]{separator}[/cyan]")
 
-    def _print_fancy_grid_colored(self, grid):
+    def _print_fancy_grid_colored(self, grid: List[List[Dict[str, Any]]]) -> None:
+        """
+        Print the grid in fancy tabulate/grid style with colors and connectors.
+
+        Args:
+            grid (List[List[Dict[str, Any]]]): 2D grid of cell dictionaries with 'value' and 'color' keys
+        """
         """Print the grid in fancy tabulate/grid style with colors and connectors"""
         if not grid:
             return
@@ -1037,7 +1328,13 @@ class AVLTreeCLI:
             rprint(row_str)
             rprint(f"[cyan]{separator}[/cyan]")
 
-    def show_help(self):
+    def show_help(self) -> None:
+        """
+        Display help information about available commands.
+
+        Shows comprehensive help including commands, multiple command usage,
+        configuration options, and visual indicators.
+        """
         rprint("[bold]Commands:[/bold]")
         rprint("  a <value>             - Add a node (values: -99 to 999)")
         rprint("  d <value>             - Delete a node (values: -99 to 999)")
@@ -1066,8 +1363,12 @@ class AVLTreeCLI:
         rprint("  [bright_green]Green nodes[/bright_green]  - Recently added")
         rprint("  [red]Red nodes[/red]    - Unbalanced (need rotation)")
 
-    def _show_preorder(self):
-        """Show preorder traversal of the tree"""
+    def _show_preorder(self) -> None:
+        """
+        Show preorder traversal of the tree.
+
+        Displays nodes in root -> left -> right order.
+        """
         if not self.tree.root:
             rprint("[yellow]Tree is empty[/yellow]")
             return
@@ -1076,8 +1377,12 @@ class AVLTreeCLI:
         self._preorder_traversal(self.tree.root, traversal)
         rprint(f"[bold]Preorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
 
-    def _show_inorder(self):
-        """Show inorder traversal of the tree"""
+    def _show_inorder(self) -> None:
+        """
+        Show inorder traversal of the tree.
+
+        Displays nodes in left -> root -> right order (sorted order for BST).
+        """
         if not self.tree.root:
             rprint("[yellow]Tree is empty[/yellow]")
             return
@@ -1086,8 +1391,12 @@ class AVLTreeCLI:
         self._inorder_traversal(self.tree.root, traversal)
         rprint(f"[bold]Inorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
 
-    def _show_postorder(self):
-        """Show postorder traversal of the tree"""
+    def _show_postorder(self) -> None:
+        """
+        Show postorder traversal of the tree.
+
+        Displays nodes in left -> right -> root order.
+        """
         if not self.tree.root:
             rprint("[yellow]Tree is empty[/yellow]")
             return
@@ -1096,29 +1405,48 @@ class AVLTreeCLI:
         self._postorder_traversal(self.tree.root, traversal)
         rprint(f"[bold]Postorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
 
-    def _preorder_traversal(self, node, traversal):
-        """Perform preorder traversal: root -> left -> right"""
+    def _preorder_traversal(self, node: Optional[Node], traversal: List[int]) -> None:
+        """
+        Perform preorder traversal: root -> left -> right.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            traversal (List[int]): List to store traversal results
+        """
         if node:
             traversal.append(node.value)
             self._preorder_traversal(node.left, traversal)
             self._preorder_traversal(node.right, traversal)
 
-    def _inorder_traversal(self, node, traversal):
-        """Perform inorder traversal: left -> root -> right"""
+    def _inorder_traversal(self, node: Optional[Node], traversal: List[int]) -> None:
+        """
+        Perform inorder traversal: left -> root -> right.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            traversal (List[int]): List to store traversal results
+        """
         if node:
             self._inorder_traversal(node.left, traversal)
             traversal.append(node.value)
             self._inorder_traversal(node.right, traversal)
 
-    def _postorder_traversal(self, node, traversal):
-        """Perform postorder traversal: left -> right -> root"""
+    def _postorder_traversal(self, node: Optional[Node], traversal: List[int]) -> None:
+        """
+        Perform postorder traversal: left -> right -> root.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            traversal (List[int]): List to store traversal results
+        """
         if node:
             self._postorder_traversal(node.left, traversal)
             self._postorder_traversal(node.right, traversal)
             traversal.append(node.value)
 
 
-def main():
+def main() -> None:
+    """Main entry point for the AVL Tree CLI application."""
     cli = AVLTreeCLI()
     cli.run()
 
