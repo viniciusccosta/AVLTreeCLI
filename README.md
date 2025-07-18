@@ -4,11 +4,12 @@ A terminal-based interactive learning tool to practice AVL tree insertions, dele
 
 ## Features
 
-- 📈 **AVL Tree Visualization**: Displays the tree in a clear grid layout.
+- 📈 **AVL Tree Visualization**: Displays the tree in a clear grid layout with connectors.
 - 🤖 **Automatic Mode**: Automatically balances the tree after insertions/deletions.
 - 🧠 **Practice Mode**: Learn AVL balancing by manually applying the correct rotations.
-- 🔄 **Undo/Redo Support**: Revert and replay actions easily.
 - 📚 **Step-by-Step Guidance**: See every rotation explained and shown.
+- ⚡ **Multiple Commands**: Chain multiple commands in a single line (e.g., `a 10 a 20 a 30`).
+- 🔄 **Tree Traversals**: View preorder, inorder, and postorder traversals.
 - 🎨 **Color-Coded Display**:
   - `bright_green` for recently added nodes
   - `red` for unbalanced nodes
@@ -16,9 +17,7 @@ A terminal-based interactive learning tool to practice AVL tree insertions, dele
 ## Installation
 
 ```bash
-git clone https://github.com/your-username/avl-tree-practice.git
-cd avl-tree-practice
-pip install -r requirements.txt
+pipx install avltreecli
 ```
 
 Make sure you have Python 3.13 installed.
@@ -26,28 +25,42 @@ Make sure you have Python 3.13 installed.
 ## Usage
 
 ```bash
-python -m avltrecli.cli
+avltreecli
 ```
 
 ## Commands
 
-| Command                    | Description                                |
+| Command                   | Description                                |
 |---------------------------|--------------------------------------------|
-| `add <value>` / `a`       | Add a node                                 |
-| `remove <value>` / `r`    | Remove a node                              |
-| `rotate left <value>`     | Apply left rotation                        |
-| `rotate right <value>`    | Apply right rotation                       |
+| `a <value>`               | Add a node (values: -99 to 999)            |
+| `d <value>`               | Remove a node                              |
 | `rl <value>`              | Left rotation (shortcut)                   |
 | `rr <value>`              | Right rotation (shortcut)                  |
 | `tree`                    | Display current AVL tree                   |
-| `reset`                   | Clear the tree and command history         |
-| `undo`                    | Undo last action                           |
-| `redo`                    | Redo previously undone action              |
+| `reset`                   | Clear the tree                             |
 | `status`                  | Show current configuration and tree stats  |
 | `hint`                    | Show hints for how to balance the tree     |
+| `preorder`                | Show preorder traversal                    |
+| `inorder`                 | Show inorder traversal                     |
+| `postorder`               | Show postorder traversal                   |
 | `clear`                   | Clear screen and show current state        |
 | `help`                    | Display help information                   |
 | `exit`                    | Exit the program                           |
+
+## Multiple Commands
+
+You can chain multiple commands in a single line for faster operations:
+
+```bash
+# Add multiple nodes at once
+> a 10 a 20 a 30 a 40 a 50
+
+# Mix operations
+> a 15 a 25 d 20 a 35
+
+# Quick tree building
+> a 50 a 30 a 70 a 20 a 40 a 60 a 80
+```
 
 ## Configuration
 
@@ -76,15 +89,41 @@ Available settings:
 ## Example Session
 
 ```bash
-> add 30
+# Basic operations
+> a 30
 Added 30 to the tree
-> add 20
+
+> a 20
 Added 20 to the tree
-> add 10
+
+> a 10
 Tree is unbalanced! Node 30 has balance factor 2
 Step 1: Balancing node 30 (balance: 2)
 → Performing right rotation on node 30
 Tree is now balanced!
+
+# Multiple commands in one line
+> a 40 a 50 a 60
+Added 40 to the tree
+Added 50 to the tree
+Tree is unbalanced! Node 40 has balance factor -2
+Step 1: Balancing node 40 (balance: -2)
+→ Performing left rotation on node 40
+Added 60 to the tree
+
+# View tree structure
+> tree
++---+---+---+---+---+---+---+
+|   |   |   | 30|   |   |   |
++---+---+---+---+---+---+---+
+|   | 20| < | ╩ | > | 50|   |
++---+---+---+---+---+---+---+
+| 10|   |   |   | 40| ╩ | 60|
++---+---+---+---+---+---+---+
+
+# Check traversals
+> inorder
+Inorder traversal: 10 -> 20 -> 30 -> 40 -> 50 -> 60
 ```
 
 ## Contributing
