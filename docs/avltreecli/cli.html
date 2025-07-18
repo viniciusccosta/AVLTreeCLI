@@ -1,0 +1,2047 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>avltreecli.cli API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>avltreecli.cli</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="avltreecli.cli.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main() -&gt; None:
+    &#34;&#34;&#34;Main entry point for the AVL Tree CLI application.&#34;&#34;&#34;
+    cli = AVLTreeCLI()
+    cli.run()</code></pre>
+</details>
+<div class="desc"><p>Main entry point for the AVL Tree CLI application.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="avltreecli.cli.AVLTreeCLI"><code class="flex name class">
+<span>class <span class="ident">AVLTreeCLI</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AVLTreeCLI:
+    &#34;&#34;&#34;
+    Interactive command-line interface for practicing AVL tree operations.
+
+    This CLI provides two learning modes:
+    - Automatic mode: Tree automatically balances after insertions/deletions
+    - Practice mode: User manually applies rotations with guided hints
+
+    Features include visual tree display, step-by-step balancing guidance,
+    multiple command chaining, and tree traversal operations.
+
+    Attributes:
+        tree (AVLTree): The AVL tree instance
+        console (Console): Rich console for colored output
+        auto_show_tree (bool): Whether to display tree after each command
+        mode (str): Current mode (&#34;automatic&#34; or &#34;practice&#34;)
+        show_steps (bool): Whether to show step-by-step rotation details
+        recently_added (Optional[int]): Value of recently added node for highlighting
+        recently_removed (Optional[int]): Value of recently removed node for highlighting
+    &#34;&#34;&#34;
+
+    def __init__(self) -&gt; None:
+        &#34;&#34;&#34;Initialize the AVL Tree CLI with default settings.&#34;&#34;&#34;
+        self.tree: AVLTree = AVLTree()
+        self.console: Console = Console()
+
+        # Configuration settings
+        self.auto_show_tree: bool = True  # Show tree after every command
+        self.mode: str = &#34;automatic&#34;  # Modes: &#34;automatic&#34;, &#34;practice&#34;
+        self.show_steps: bool = True  # Show each step during automatic rotations
+
+        # Visual enhancements
+        self.recently_added: Optional[int] = None  # Track the most recently added node
+        self.recently_removed: Optional[int] = (
+            None  # Track the most recently removed node
+        )
+
+    def run(self) -&gt; None:
+        &#34;&#34;&#34;
+        Main CLI loop that handles user input and command processing.
+
+        Displays welcome message and continuously processes user commands
+        until the user types &#39;exit&#39;.
+        &#34;&#34;&#34;
+        self.console.clear()
+        rprint(&#34;[bold green]AVL Tree Practice Tool[/bold green]&#34;)
+        rprint(f&#34;[bold]Mode:[/bold] {self.mode.title()}&#34;)
+        rprint(f&#34;[bold]Auto-show tree:[/bold] {&#39;On&#39; if self.auto_show_tree else &#39;Off&#39;}&#34;)
+        rprint(f&#34;[bold]Show steps:[/bold] {&#39;On&#39; if self.show_steps else &#39;Off&#39;}\n&#34;)
+        rprint(&#34;Type &#39;help&#39; for commands.&#34;)
+        while True:
+            command_line = input(&#34;&gt; &#34;).strip().lower()
+            if command_line == &#34;exit&#34;:
+                break
+            self.process_command_line(command_line)
+
+    def process_command_line(self, command_line: str) -&gt; None:
+        &#34;&#34;&#34;
+        Process a line that may contain multiple commands.
+
+        Args:
+            command_line (str): The input line containing one or more commands
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Process a line that may contain multiple commands&#34;&#34;&#34;
+        if not command_line:
+            return
+
+        # Split the command line into individual commands
+        commands = self._parse_multiple_commands(command_line)
+
+        for command in commands:
+            if command == &#34;exit&#34;:
+                return
+            self.process_command(command)
+
+    def _parse_multiple_commands(self, command_line: str) -&gt; List[str]:
+        &#34;&#34;&#34;
+        Parse a command line into individual commands.
+
+        Supports command chaining by parsing space-separated commands and their arguments.
+        Handles single-word commands, commands with one argument, and multi-argument commands.
+
+        Args:
+            command_line (str): The input line to parse
+
+        Returns:
+            List[str]: List of individual command strings
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Parse a command line into individual commands&#34;&#34;&#34;
+        commands = []
+        parts = command_line.split()
+        i = 0
+
+        while i &lt; len(parts):
+            cmd = parts[i]
+
+            # Single word commands
+            if cmd in [
+                &#34;tree&#34;,
+                &#34;clear&#34;,
+                &#34;reset&#34;,
+                &#34;status&#34;,
+                &#34;hint&#34;,
+                &#34;preorder&#34;,
+                &#34;inorder&#34;,
+                &#34;postorder&#34;,
+                &#34;help&#34;,
+                &#34;exit&#34;,
+            ]:
+                commands.append(cmd)
+                i += 1
+
+            # Commands that take one argument
+            elif cmd in [&#34;a&#34;, &#34;d&#34;, &#34;rr&#34;, &#34;rl&#34;] and i + 1 &lt; len(parts):
+                commands.append(f&#34;{cmd} {parts[i + 1]}&#34;)
+                i += 2
+
+            # Commands that take two arguments
+            elif cmd == &#34;rotate&#34; and i + 2 &lt; len(parts):
+                commands.append(f&#34;{cmd} {parts[i + 1]} {parts[i + 2]}&#34;)
+                i += 3
+
+            # Config commands that take two arguments
+            elif cmd == &#34;config&#34; and i + 2 &lt; len(parts):
+                commands.append(f&#34;{cmd} {parts[i + 1]} {parts[i + 2]}&#34;)
+                i += 3
+
+            # If we can&#39;t parse the command properly, treat it as a single command
+            else:
+                commands.append(cmd)
+                i += 1
+
+        return commands
+
+    def process_command(self, command: str) -&gt; None:
+        &#34;&#34;&#34;
+        Process a single command with its arguments.
+
+        Handles all supported commands including add, delete, rotate, config,
+        display, status, hint, traversals, and utility commands.
+
+        Args:
+            command (str): The command string to process
+        &#34;&#34;&#34;
+        parts = command.split()
+        if not parts:
+            return
+        cmd = parts[0]
+        args = parts[1:]
+
+        try:
+            if cmd == &#34;a&#34; and len(args) == 1:
+                value = int(args[0])
+
+                # Check if value is within allowed range (-99 to 999)
+                if value &lt; -99 or value &gt; 999:
+                    rprint(
+                        f&#34;[red]Value {value} is out of range! Please use values from -99 to 999 to maintain grid formatting.[/red]&#34;
+                    )
+                    return
+
+                # Check if value already exists in the tree
+                if self.tree.search(value):
+                    rprint(
+                        f&#34;[red]Value {value} already exists in the tree! Cannot add duplicates.[/red]&#34;
+                    )
+                    return
+
+                self.recently_added = value  # Track the recently added node
+                self.recently_removed = None  # Clear recently removed
+                if self.mode == &#34;automatic&#34;:
+                    self._insert_with_auto_balance(value)
+                elif self.mode == &#34;practice&#34;:
+                    # Check if tree is already unbalanced
+                    if self._find_unbalanced_node(self.tree.root):
+                        rprint(
+                            &#34;[yellow]Tree is currently unbalanced! Please balance it first before adding new nodes.[/yellow]&#34;
+                        )
+                        rprint(
+                            &#34;[yellow]Use &#39;hint&#39; command for guidance on how to balance it.[/yellow]&#34;
+                        )
+                        return
+                    # In practice mode, insert without auto-balancing
+                    self.tree.root = self._insert_manual(self.tree.root, value)
+                    self._check_balance_and_guide()
+                rprint(f&#34;[green]Added {value} to the tree[/green]&#34;)
+                if self.auto_show_tree:
+                    self.display_tree()
+
+                # In automatic mode, clear recently added tracking after final display
+                # only if the tree is balanced (so green shows during steps but clears after)
+                if self.mode == &#34;automatic&#34; and not self._find_unbalanced_node(
+                    self.tree.root
+                ):
+                    self.recently_added = None
+
+            elif cmd == &#34;d&#34; and len(args) == 1:
+                value = int(args[0])
+
+                # Check if value is within allowed range (-99 to 999)
+                if value &lt; -99 or value &gt; 999:
+                    rprint(
+                        f&#34;[red]Value {value} is out of range! Please use values from -99 to 999.[/red]&#34;
+                    )
+                    return
+
+                # Check if value exists in the tree before trying to remove it
+                if not self.tree.search(value):
+                    rprint(
+                        f&#34;[red]Value {value} not found in the tree! Cannot remove.[/red]&#34;
+                    )
+                    return
+
+                self.recently_removed = value  # Track the recently removed node
+                self.recently_added = None  # Clear recently added
+                if self.mode == &#34;automatic&#34;:
+                    self._delete_with_auto_balance(value)
+                elif self.mode == &#34;practice&#34;:
+                    # Check if tree is already unbalanced
+                    if self._find_unbalanced_node(self.tree.root):
+                        rprint(
+                            &#34;[yellow]Tree is currently unbalanced! Please balance it first before removing nodes.[/yellow]&#34;
+                        )
+                        rprint(
+                            &#34;[yellow]Use &#39;hint&#39; command for guidance on how to balance it.[/yellow]&#34;
+                        )
+                        return
+                    # In practice mode, delete without auto-balancing
+                    self.tree.root = self._delete_manual(self.tree.root, value)
+                    self._check_balance_and_guide()
+                rprint(f&#34;[green]Removed {value} from the tree[/green]&#34;)
+                if self.auto_show_tree:
+                    self.display_tree()
+
+                # In automatic mode, clear recently removed tracking after final display
+                # only if the tree is balanced (so coloring shows during steps but clears after)
+                if self.mode == &#34;automatic&#34; and not self._find_unbalanced_node(
+                    self.tree.root
+                ):
+                    self.recently_removed = None
+
+            elif cmd in [&#34;rr&#34;, &#34;rl&#34;] and len(args) == 1:
+                if self.mode == &#34;automatic&#34;:
+                    rprint(
+                        &#34;[yellow]Rotate commands are disabled in automatic mode[/yellow]&#34;
+                    )
+                    return
+
+                # Handle different command formats
+                if cmd == &#34;rr&#34;:
+                    direction = &#34;right&#34;
+                    value = int(args[0])
+                elif cmd == &#34;rl&#34;:
+                    direction = &#34;left&#34;
+                    value = int(args[0])
+
+                # Check if value is within allowed range (-99 to 999)
+                if value &lt; -99 or value &gt; 999:
+                    rprint(
+                        f&#34;[red]Value {value} is out of range! Please use values from -99 to 999.[/red]&#34;
+                    )
+                    return
+
+                node = self.tree.search(value)
+                if not node:
+                    rprint(&#34;[red]Node not found[/red]&#34;)
+                    return
+
+                if self.mode == &#34;practice&#34;:
+                    if not self._is_rotation_needed(value, direction):
+                        rprint(
+                            &#34;[yellow]This rotation is not needed or correct right now. Try to balance the tree properly.[/yellow]&#34;
+                        )
+                        return
+
+                if direction == &#34;left&#34;:
+                    # Find parent to properly update tree structure
+                    if node == self.tree.root:
+                        self.tree.root = self.tree.left_rotate(node)
+                    else:
+                        self._rotate_node_and_update_parent(node, &#34;left&#34;)
+                    # Update heights throughout the tree after manual rotation
+                    self._update_all_heights(self.tree.root)
+                    rprint(f&#34;[green]Performed left rotation on node {value}[/green]&#34;)
+                elif direction == &#34;right&#34;:
+                    # Find parent to properly update tree structure
+                    if node == self.tree.root:
+                        self.tree.root = self.tree.right_rotate(node)
+                    else:
+                        self._rotate_node_and_update_parent(node, &#34;right&#34;)
+                    # Update heights throughout the tree after manual rotation
+                    self._update_all_heights(self.tree.root)
+                    rprint(f&#34;[green]Performed right rotation on node {value}[/green]&#34;)
+                else:
+                    rprint(&#34;[red]Use &#39;left&#39; or &#39;right&#39;[/red]&#34;)
+                    return
+
+                # Clear recently added/removed tracking after rotation
+                self.recently_added = None
+                self.recently_removed = None
+
+                if self.auto_show_tree:
+                    self.display_tree()
+
+                # After rotation in practice mode, check if tree is now balanced
+                if self.mode == &#34;practice&#34;:
+                    self._check_balance_and_guide()
+
+            elif cmd == &#34;config&#34; and len(args) &gt;= 2:
+                self._handle_config(args)
+
+            elif cmd == &#34;clear&#34;:
+                self.console.clear()
+                rprint(&#34;[bold green]AVL Tree Practice Tool[/bold green]&#34;)
+                rprint(f&#34;[bold]Mode:[/bold] {self.mode.title()}&#34;)
+                rprint(
+                    f&#34;[bold]Auto-show tree:[/bold] {&#39;On&#39; if self.auto_show_tree else &#39;Off&#39;}&#34;
+                )
+                rprint(
+                    f&#34;[bold]Show steps:[/bold] {&#39;On&#39; if self.show_steps else &#39;Off&#39;}\n&#34;
+                )
+                rprint(&#34;[green]Screen cleared[/green]&#34;)
+                if self.auto_show_tree and self.tree.root:
+                    self.display_tree()
+
+            elif cmd == &#34;reset&#34;:
+                self.tree = AVLTree()
+                self.recently_added = None
+                self.recently_removed = None
+                rprint(&#34;[green]Tree reset[/green]&#34;)
+                if self.auto_show_tree:
+                    self.display_tree()
+
+            elif cmd == &#34;tree&#34;:
+                self.display_tree()
+                return
+
+            elif cmd == &#34;status&#34;:
+                self._show_status()
+                return
+
+            elif cmd == &#34;hint&#34;:
+                self._show_hint()
+                return
+
+            elif cmd == &#34;preorder&#34;:
+                self._show_preorder()
+                return
+
+            elif cmd == &#34;inorder&#34;:
+                self._show_inorder()
+                return
+
+            elif cmd == &#34;postorder&#34;:
+                self._show_postorder()
+                return
+
+            elif cmd == &#34;help&#34;:
+                self.show_help()
+                return
+            else:
+                rprint(&#34;[red]Invalid command. Try &#39;help&#39;.[/red]&#34;)
+                return
+        except ValueError:
+            rprint(&#34;[red]Invalid number[/red]&#34;)
+
+    def display_tree(self) -&gt; None:
+        &#34;&#34;&#34;
+        Display the tree in a fancy grid format with visual connectors.
+
+        Creates a visual representation of the AVL tree using a grid layout
+        with connecting lines and color-coded nodes. Empty trees display
+        a simple message.
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Display the tree in a fancy grid format with visual connectors&#34;&#34;&#34;
+        if not self.tree.root:
+            rprint(&#34;[yellow]Tree is empty[/yellow]&#34;)
+            return
+
+        # Calculate tree dimensions
+        height = self._get_tree_height(self.tree.root)
+        cols = 2**height - 1  # Total columns needed
+
+        # Create a grid to hold the tree with color information
+        grid = [
+            [{&#34;value&#34;: &#34; &#34;, &#34;color&#34;: None} for _ in range(cols)] for _ in range(height)
+        ]
+
+        # Get all nodes organized by level
+        levels = self._get_tree_levels_with_positions(self.tree.root)
+
+        # Get unbalanced nodes for coloring
+        unbalanced_nodes = self._get_all_unbalanced_nodes(self.tree.root)
+
+        # Place nodes and connectors in the grid
+        for level_idx, level_nodes in enumerate(levels):
+            if level_idx &gt;= height:
+                break
+
+            # Calculate positions for this level
+            positions = self._calculate_level_positions(level_idx, height, cols)
+
+            # Place each node at its calculated position with appropriate color
+            for i, node in enumerate(level_nodes):
+                if i &lt; len(positions) and node is not None:
+                    col = positions[i]
+                    if 0 &lt;= col &lt; cols:
+                        node_value = str(node.value)
+                        node_color = self._get_node_color(node.value, unbalanced_nodes)
+                        grid[level_idx][col] = {
+                            &#34;value&#34;: node_value,
+                            &#34;color&#34;: node_color,
+                        }
+
+                        # Add connectors if not the last level
+                        if level_idx &lt; height - 1:
+                            # Add ╩ below parent if it has children
+                            if node.left or node.right:
+                                if level_idx + 1 &lt; height:
+                                    grid[level_idx + 1][col] = {
+                                        &#34;value&#34;: &#34;╩&#34;,
+                                        &#34;color&#34;: None,
+                                    }
+
+                            # Add connecting lines for left child
+                            if node.left and level_idx + 1 &lt; len(levels):
+                                left_positions = self._calculate_level_positions(
+                                    level_idx + 1, height, cols
+                                )
+                                left_child_idx = i * 2
+                                if left_child_idx &lt; len(left_positions):
+                                    left_col = left_positions[left_child_idx]
+                                    if left_col &lt; col and level_idx + 1 &lt; height:
+                                        # Fill the path from trunk to left child with &#39;&lt;&#39;
+                                        for path_col in range(left_col + 1, col):
+                                            grid[level_idx + 1][path_col] = {
+                                                &#34;value&#34;: &#34;&lt;&#34;,
+                                                &#34;color&#34;: None,
+                                            }
+
+                            # Add connecting lines for right child
+                            if node.right and level_idx + 1 &lt; len(levels):
+                                right_positions = self._calculate_level_positions(
+                                    level_idx + 1, height, cols
+                                )
+                                right_child_idx = i * 2 + 1
+                                if right_child_idx &lt; len(right_positions):
+                                    right_col = right_positions[right_child_idx]
+                                    if right_col &gt; col and level_idx + 1 &lt; height:
+                                        # Fill the path from trunk to right child with &#39;&gt;&#39;
+                                        for path_col in range(col + 1, right_col):
+                                            grid[level_idx + 1][path_col] = {
+                                                &#34;value&#34;: &#34;&gt;&#34;,
+                                                &#34;color&#34;: None,
+                                            }
+
+        # Print the fancy grid with colors and connectors
+        self._print_fancy_grid_colored(grid)
+
+    def _calculate_level_positions(
+        self, level: int, height: int, cols: int
+    ) -&gt; List[int]:
+        &#34;&#34;&#34;
+        Calculate positions for nodes at a specific level using mathematical formula.
+
+        Args:
+            level (int): The tree level (0-indexed, root is level 0)
+            height (int): Total height of the tree
+            cols (int): Total number of columns in the grid
+
+        Returns:
+            List[int]: List of column positions for nodes at this level
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Calculate positions for nodes at a specific level using the mathematical formula&#34;&#34;&#34;
+        nodes_at_level = 2**level
+
+        if level == 0:
+            # Root is at the center
+            return [cols // 2]
+
+        # Calculate leading space and space between nodes
+        leading_space = 2 ** (height - level - 1) - 1
+        space_between = 2 ** (height - level) - 1
+
+        positions = []
+        for i in range(nodes_at_level):
+            if i == 0:
+                # First node position
+                pos = leading_space
+            else:
+                # Subsequent nodes
+                pos = leading_space + i * (space_between + 1)
+            positions.append(pos)
+
+        return positions
+
+    def _get_tree_levels_with_positions(
+        self, root: Optional[Node]
+    ) -&gt; List[List[Optional[Node]]]:
+        &#34;&#34;&#34;
+        Get nodes organized by level in breadth-first order.
+
+        Includes None placeholders for missing nodes to maintain tree structure
+        in the visual representation.
+
+        Args:
+            root (Optional[Node]): The root node of the tree
+
+        Returns:
+            List[List[Optional[Node]]]: List of levels, each containing nodes and None placeholders
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Get nodes organized by level in breadth-first order, including None for missing nodes&#34;&#34;&#34;
+        if not root:
+            return []
+
+        levels = []
+        current_level = [root]
+
+        while current_level and any(node is not None for node in current_level):
+            # Add current level to levels
+            levels.append(current_level[:])
+
+            # Generate next level
+            next_level = []
+            for node in current_level:
+                if node:
+                    next_level.extend([node.left, node.right])
+                else:
+                    next_level.extend([None, None])
+
+            current_level = next_level
+
+        return levels
+
+    def _rotate_node_and_update_parent(self, node: Node, direction: str) -&gt; None:
+        &#34;&#34;&#34;
+        Rotate a node and update its parent&#39;s reference.
+
+        Finds the parent of the target node and updates the appropriate
+        child reference after rotation to maintain tree structure.
+
+        Args:
+            node (Node): The node to rotate
+            direction (str): Direction of rotation (&#34;left&#34; or &#34;right&#34;)
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Rotate a node and update its parent&#39;s reference&#34;&#34;&#34;
+        # Find the parent of the node
+        parent = None
+        current = self.tree.root
+
+        while current and current != node:
+            parent = current
+            if node.value &lt; current.value:
+                current = current.left
+            else:
+                current = current.right
+
+        # Perform the rotation
+        if direction == &#34;left&#34;:
+            rotated_node = self.tree.left_rotate(node)
+        else:
+            rotated_node = self.tree.right_rotate(node)
+
+        # Update parent&#39;s reference
+        if parent:
+            if parent.left == node:
+                parent.left = rotated_node
+            else:
+                parent.right = rotated_node
+        else:
+            # This shouldn&#39;t happen as we check for root above
+            self.tree.root = rotated_node
+
+    def _update_all_heights(self, node: Optional[Node]) -&gt; None:
+        &#34;&#34;&#34;
+        Update heights for all nodes in the tree using post-order traversal.
+
+        Recursively updates heights starting from leaves and working up to root.
+        This is necessary after manual rotations to ensure correct balance factors.
+
+        Args:
+            node (Optional[Node]): The root of the subtree to update
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Update heights for all nodes in the tree (post-order traversal)&#34;&#34;&#34;
+        if not node:
+            return
+
+        # Update children first
+        self._update_all_heights(node.left)
+        self._update_all_heights(node.right)
+
+        # Update current node&#39;s height
+        node.height = 1 + max(
+            self.tree.get_height(node.left), self.tree.get_height(node.right)
+        )
+
+    def _handle_config(self, args: List[str]) -&gt; None:
+        &#34;&#34;&#34;
+        Handle configuration commands for changing CLI settings.
+
+        Supports settings for auto-show tree, steps display, and mode switching.
+
+        Args:
+            args (List[str]): List of arguments [setting, value]
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Handle configuration commands&#34;&#34;&#34;
+        if len(args) &lt; 2:
+            rprint(&#34;[red]Usage: config &lt;setting&gt; &lt;value&gt;[/red]&#34;)
+            return
+
+        setting = args[0]
+        value = args[1]
+
+        if setting == &#34;autoshow&#34;:
+            if value in [&#34;on&#34;, &#34;true&#34;, &#34;1&#34;]:
+                self.auto_show_tree = True
+                rprint(&#34;[green]Auto-show tree enabled[/green]&#34;)
+            elif value in [&#34;off&#34;, &#34;false&#34;, &#34;0&#34;]:
+                self.auto_show_tree = False
+                rprint(&#34;[green]Auto-show tree disabled[/green]&#34;)
+            else:
+                rprint(&#34;[red]Use &#39;on&#39; or &#39;off&#39;[/red]&#34;)
+
+        elif setting == &#34;mode&#34;:
+            if value in [&#34;automatic&#34;, &#34;practice&#34;]:
+                self.mode = value
+                rprint(f&#34;[green]Mode set to {value}[/green]&#34;)
+                if value == &#34;automatic&#34;:
+                    rprint(
+                        &#34;[yellow]Note: Rotate commands are disabled in automatic mode[/yellow]&#34;
+                    )
+                elif value == &#34;practice&#34;:
+                    rprint(
+                        &#34;[yellow]Note: Only correct rotations are allowed in practice mode[/yellow]&#34;
+                    )
+            else:
+                rprint(&#34;[red]Valid modes: automatic, practice[/red]&#34;)
+
+        elif setting == &#34;steps&#34;:
+            if value in [&#34;on&#34;, &#34;true&#34;, &#34;1&#34;]:
+                self.show_steps = True
+                rprint(&#34;[green]Show steps enabled[/green]&#34;)
+            elif value in [&#34;off&#34;, &#34;false&#34;, &#34;0&#34;]:
+                self.show_steps = False
+                rprint(&#34;[green]Show steps disabled[/green]&#34;)
+            else:
+                rprint(&#34;[red]Use &#39;on&#39; or &#39;off&#39;[/red]&#34;)
+        else:
+            rprint(&#34;[red]Unknown setting. Use: autoshow, mode, or steps[/red]&#34;)
+
+    def _insert_with_auto_balance(self, value: int) -&gt; None:
+        &#34;&#34;&#34;
+        Insert a value with automatic balancing and step-by-step display.
+
+        First inserts the value without balancing to show the unbalanced state,
+        then applies rotations step by step if show_steps is enabled.
+
+        Args:
+            value (int): The value to insert
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Insert with automatic balancing and step-by-step display&#34;&#34;&#34;
+        # First insert without auto-balancing to show unbalanced state
+        self.tree.root = self._insert_manual(self.tree.root, value)
+
+        if self.show_steps and self.auto_show_tree:
+            # Check if tree became unbalanced
+            unbalanced_node = self._find_unbalanced_node(self.tree.root)
+            if unbalanced_node:
+                rprint(&#34;[yellow]After insertion (before balancing):[/yellow]&#34;)
+                self.display_tree()
+                rprint(
+                    f&#34;[red]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {self.tree.get_balance(unbalanced_node)}[/]&#34;
+                )
+
+        # Now check and apply rotations step by step
+        self._balance_tree_with_steps()
+
+    def _delete_with_auto_balance(self, value: int) -&gt; None:
+        &#34;&#34;&#34;
+        Delete a value with automatic balancing and step-by-step display.
+
+        First deletes the value without balancing to show the unbalanced state,
+        then applies rotations step by step if show_steps is enabled.
+
+        Args:
+            value (int): The value to delete
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Delete with automatic balancing and step-by-step display&#34;&#34;&#34;
+        # First delete without auto-balancing to show unbalanced state
+        self.tree.root = self._delete_manual(self.tree.root, value)
+
+        if self.show_steps and self.auto_show_tree:
+            # Check if tree became unbalanced
+            unbalanced_node = self._find_unbalanced_node(self.tree.root)
+            if unbalanced_node:
+                rprint(&#34;[yellow]After deletion (before balancing):[/yellow]&#34;)
+                self.display_tree()
+                rprint(
+                    f&#34;[red]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {self.tree.get_balance(unbalanced_node)}[/]&#34;
+                )
+
+        # Now check and apply rotations step by step
+        self._balance_tree_with_steps()
+
+    def _insert_manual(self, node: Optional[Node], value: int) -&gt; Node:
+        &#34;&#34;&#34;
+        Insert a value without automatic balancing.
+
+        Standard BST insertion that updates heights but doesn&#39;t apply rotations.
+        Used in practice mode and as first step in automatic mode.
+
+        Args:
+            node (Optional[Node]): Root of subtree to insert into
+            value (int): Value to insert
+
+        Returns:
+            Node: Root of subtree after insertion
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Insert without automatic balancing&#34;&#34;&#34;
+        if not node:
+            return Node(value)
+        elif value &lt; node.value:
+            node.left = self._insert_manual(node.left, value)
+        else:
+            node.right = self._insert_manual(node.right, value)
+
+        node.height = 1 + max(
+            self.tree.get_height(node.left), self.tree.get_height(node.right)
+        )
+        return node
+
+    def _delete_manual(self, node: Optional[Node], value: int) -&gt; Optional[Node]:
+        &#34;&#34;&#34;
+        Delete a value without automatic balancing.
+
+        Standard BST deletion that updates heights but doesn&#39;t apply rotations.
+        Used in practice mode and as first step in automatic mode.
+
+        Args:
+            node (Optional[Node]): Root of subtree to delete from
+            value (int): Value to delete
+
+        Returns:
+            Optional[Node]: Root of subtree after deletion
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Delete without automatic balancing&#34;&#34;&#34;
+        if not node:
+            return node
+        elif value &lt; node.value:
+            node.left = self._delete_manual(node.left, value)
+        elif value &gt; node.value:
+            node.right = self._delete_manual(node.right, value)
+        else:
+            if node.left is None:
+                return node.right
+            elif node.right is None:
+                return node.left
+            temp = self.tree.get_min_value_node(node.right)
+            node.value = temp.value
+            node.right = self._delete_manual(node.right, temp.value)
+
+        node.height = 1 + max(
+            self.tree.get_height(node.left), self.tree.get_height(node.right)
+        )
+        return node
+
+    def _balance_tree_with_steps(self) -&gt; None:
+        &#34;&#34;&#34;
+        Balance the tree step by step, showing each rotation.
+
+        Continuously finds and balances unbalanced nodes until the entire
+        tree is balanced. Shows detailed step information if enabled.
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Balance the tree step by step, showing each rotation&#34;&#34;&#34;
+        step = 1
+        while True:
+            unbalanced_node = self._find_unbalanced_node(self.tree.root)
+            if not unbalanced_node:
+                if step &gt; 1 and self.show_steps and self.auto_show_tree:
+                    rprint(&#34;[green]Tree is now balanced![/green]&#34;)
+                break
+
+            if self.show_steps and self.auto_show_tree:
+                balance = self.tree.get_balance(unbalanced_node)
+                rprint(
+                    f&#34;[yellow]Step {step}: Balancing node {unbalanced_node.value} (balance: {balance})[/yellow]&#34;
+                )
+
+                # Show what rotation will be performed
+                if balance &gt; 1:
+                    left_balance = self.tree.get_balance(unbalanced_node.left)
+                    if left_balance &gt;= 0:
+                        rprint(
+                            f&#34;[yellow]Performing right rotation on node {unbalanced_node.value}[/yellow]&#34;
+                        )
+                    else:
+                        rprint(
+                            f&#34;[yellow]Performing left-right rotation: first left on {unbalanced_node.left.value}, then right on {unbalanced_node.value}[/yellow]&#34;
+                        )
+                else:
+                    right_balance = self.tree.get_balance(unbalanced_node.right)
+                    if right_balance &lt;= 0:
+                        rprint(
+                            f&#34;[yellow]Performing left rotation on node {unbalanced_node.value}[/yellow]&#34;
+                        )
+                    else:
+                        rprint(
+                            f&#34;[yellow]Performing right-left rotation: first right on {unbalanced_node.right.value}, then left on {unbalanced_node.value}[/yellow]&#34;
+                        )
+
+            # Apply the rotation with detailed steps for double rotations
+            self.tree.root = self._balance_node_and_update_root_with_steps(
+                unbalanced_node, step
+            )
+
+            step += 1
+
+    def _balance_node_and_update_root_with_steps(
+        self, target_node: Node, step_num: int
+    ) -&gt; Node:
+        &#34;&#34;&#34;
+        Balance a specific node showing individual rotation steps.
+
+        Handles both single and double rotations with detailed step visualization
+        for educational purposes.
+
+        Args:
+            target_node (Node): The unbalanced node to balance
+            step_num (int): Current step number for display
+
+        Returns:
+            Node: The root of the tree after balancing
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Balance a specific node showing individual rotation steps&#34;&#34;&#34;
+        # Find the parent of the target node
+        parent = None
+        current = self.tree.root
+
+        while current and current != target_node:
+            parent = current
+            if target_node.value &lt; current.value:
+                current = current.left
+            else:
+                current = current.right
+
+        balance = self.tree.get_balance(target_node)
+        balanced_node = None
+
+        # Handle double rotations with intermediate steps
+        if balance &gt; 1:  # Left heavy
+            left_balance = self.tree.get_balance(target_node.left)
+            if left_balance &lt; 0:  # Left-Right case
+                # First rotation: left on left child
+                if self.show_steps and self.auto_show_tree:
+                    rprint(
+                        f&#34;[yellow]Step {step_num}a: Left rotation on node {target_node.left.value}[/yellow]&#34;
+                    )
+                target_node.left = self.tree.left_rotate(target_node.left)
+
+                # Update parent reference after first rotation
+                if parent is None:
+                    self.tree.root = target_node
+                elif parent.left == target_node:
+                    parent.left = target_node
+                else:
+                    parent.right = target_node
+
+                if self.show_steps and self.auto_show_tree:
+                    rprint(f&#34;[yellow]After step {step_num}a:[/yellow]&#34;)
+                    self.display_tree()
+
+                # Second rotation: right on target node
+                if self.show_steps and self.auto_show_tree:
+                    rprint(
+                        f&#34;[yellow]Step {step_num}b: Right rotation on node {target_node.value}[/yellow]&#34;
+                    )
+                balanced_node = self.tree.right_rotate(target_node)
+            else:  # Left-Left case
+                balanced_node = self.tree.right_rotate(target_node)
+
+        elif balance &lt; -1:  # Right heavy
+            right_balance = self.tree.get_balance(target_node.right)
+            if right_balance &gt; 0:  # Right-Left case
+                # First rotation: right on right child
+                if self.show_steps and self.auto_show_tree:
+                    rprint(
+                        f&#34;[yellow]Step {step_num}a: Right rotation on node {target_node.right.value}[/yellow]&#34;
+                    )
+                target_node.right = self.tree.right_rotate(target_node.right)
+
+                # Update parent reference after first rotation
+                if parent is None:
+                    self.tree.root = target_node
+                elif parent.left == target_node:
+                    parent.left = target_node
+                else:
+                    parent.right = target_node
+
+                if self.show_steps and self.auto_show_tree:
+                    rprint(f&#34;[yellow]After step {step_num}a:[/yellow]&#34;)
+                    self.display_tree()
+
+                # Second rotation: left on target node
+                if self.show_steps and self.auto_show_tree:
+                    rprint(
+                        f&#34;[yellow]Step {step_num}b: Left rotation on node {target_node.value}[/yellow]&#34;
+                    )
+                balanced_node = self.tree.left_rotate(target_node)
+            else:  # Right-Right case
+                balanced_node = self.tree.left_rotate(target_node)
+        else:
+            # No rotation needed
+            balanced_node = target_node
+
+        # Update the parent&#39;s reference or root with the final balanced node
+        if parent is None:
+            self.tree.root = balanced_node  # target_node was the root
+        elif parent.left == target_node:
+            parent.left = balanced_node
+        else:
+            parent.right = balanced_node
+
+        # Show final state after this rotation sequence
+        if self.show_steps and self.auto_show_tree:
+            # Determine if this was a double rotation
+            is_double_rotation = (
+                balance &gt; 1 and self.tree.get_balance(target_node.left) &lt; 0
+            ) or (balance &lt; -1 and self.tree.get_balance(target_node.right) &gt; 0)
+            final_step = f&#34;{step_num}b&#34; if is_double_rotation else str(step_num)
+            rprint(f&#34;[yellow]After step {final_step}:[/yellow]&#34;)
+            self.display_tree()
+
+        return self.tree.root
+
+    def _balance_node_and_update_root(self, target_node: Node) -&gt; Node:
+        &#34;&#34;&#34;
+        Balance a specific node and properly update the tree structure.
+
+        Args:
+            target_node (Node): The node to balance
+
+        Returns:
+            Node: The root of the tree after balancing
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Balance a specific node and properly update the tree structure&#34;&#34;&#34;
+        # We need to find the parent of the target node to update the reference
+        parent = None
+        current = self.tree.root
+
+        # Find the parent of the target node
+        while current and current != target_node:
+            parent = current
+            if target_node.value &lt; current.value:
+                current = current.left
+            else:
+                current = current.right
+
+        # Balance the target node
+        balanced_node = self._balance_node(target_node)
+
+        # Update the parent&#39;s reference or root
+        if parent is None:
+            return balanced_node  # target_node was the root
+        elif parent.left == target_node:
+            parent.left = balanced_node
+        else:
+            parent.right = balanced_node
+
+        return self.tree.root
+
+    def _find_unbalanced_node(self, node: Optional[Node]) -&gt; Optional[Node]:
+        &#34;&#34;&#34;
+        Find the first unbalanced node using post-order traversal.
+
+        Args:
+            node (Optional[Node]): Root of subtree to search
+
+        Returns:
+            Optional[Node]: First unbalanced node found, or None if tree is balanced
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Find the first unbalanced node in post-order traversal&#34;&#34;&#34;
+        if not node:
+            return None
+
+        # Check children first (post-order)
+        left_unbalanced = self._find_unbalanced_node(node.left)
+        if left_unbalanced:
+            return left_unbalanced
+
+        right_unbalanced = self._find_unbalanced_node(node.right)
+        if right_unbalanced:
+            return right_unbalanced
+
+        # Check current node
+        balance = self.tree.get_balance(node)
+        if abs(balance) &gt; 1:
+            return node
+
+        return None
+
+    def _get_all_unbalanced_nodes(self, node: Optional[Node]) -&gt; List[int]:
+        &#34;&#34;&#34;
+        Get all unbalanced nodes in the tree.
+
+        Args:
+            node (Optional[Node]): Root of subtree to search
+
+        Returns:
+            List[int]: List of values of all unbalanced nodes
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Get all unbalanced nodes in the tree&#34;&#34;&#34;
+        unbalanced = []
+        if not node:
+            return unbalanced
+
+        # Check current node
+        balance = self.tree.get_balance(node)
+        if abs(balance) &gt; 1:
+            unbalanced.append(node.value)
+
+        # Check children
+        unbalanced.extend(self._get_all_unbalanced_nodes(node.left))
+        unbalanced.extend(self._get_all_unbalanced_nodes(node.right))
+
+        return unbalanced
+
+    def _get_node_color(
+        self, node_value: int, unbalanced_nodes: List[int]
+    ) -&gt; Optional[str]:
+        &#34;&#34;&#34;
+        Determine the color for a node based on its status.
+
+        Args:
+            node_value (int): Value of the node
+            unbalanced_nodes (List[int]): List of unbalanced node values
+
+        Returns:
+            Optional[str]: Color name for the node, or None for default color
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Determine the color for a node based on its status&#34;&#34;&#34;
+        if node_value == self.recently_added:
+            return &#34;bright_green&#34;  # Recently added node in bright green
+        elif node_value in unbalanced_nodes:
+            return &#34;red&#34;  # Unbalanced nodes in red
+        else:
+            return None  # Default color (no special coloring)
+
+    def _balance_node(self, node: Optional[Node]) -&gt; Optional[Node]:
+        &#34;&#34;&#34;
+        Balance a specific node and return the new root.
+
+        Args:
+            node (Optional[Node]): The node to balance
+
+        Returns:
+            Optional[Node]: The new root after balancing
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Balance a specific node and return the new root&#34;&#34;&#34;
+        if not node:
+            return node
+
+        balance = self.tree.get_balance(node)
+
+        # Left heavy
+        if balance &gt; 1:
+            if self.tree.get_balance(node.left) &lt; 0:
+                node.left = self.tree.left_rotate(node.left)
+            return self.tree.right_rotate(node)
+
+        # Right heavy
+        if balance &lt; -1:
+            if self.tree.get_balance(node.right) &gt; 0:
+                node.right = self.tree.right_rotate(node.right)
+            return self.tree.left_rotate(node)
+
+        return node
+
+    def _check_balance_and_guide(self) -&gt; None:
+        &#34;&#34;&#34;
+        Check if tree is balanced and provide guidance in practice mode.
+
+        Displays the balance status and suggests using the hint command
+        if the tree is unbalanced.
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Check if tree is balanced and provide warning in practice mode&#34;&#34;&#34;
+        unbalanced_node = self._find_unbalanced_node(self.tree.root)
+        if unbalanced_node:
+            balance = self.tree.get_balance(unbalanced_node)
+            rprint(
+                f&#34;[red]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {balance}[/]&#34;
+            )
+            rprint(
+                &#34;[yellow]Use &#39;hint&#39; command if you need guidance on how to balance it.[/yellow]&#34;
+            )
+        else:
+            rprint(&#34;[green]Tree is balanced![/green]&#34;)
+
+    def _show_hint(self) -&gt; None:
+        &#34;&#34;&#34;
+        Show hints for balancing the tree in practice mode.
+
+        Analyzes the first unbalanced node and provides specific rotation
+        suggestions based on the balance factors.
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Show hints for balancing the tree&#34;&#34;&#34;
+        unbalanced_node = self._find_unbalanced_node(self.tree.root)
+        if not unbalanced_node:
+            rprint(&#34;[green]Tree is already balanced! No hints needed.[/green]&#34;)
+            return
+
+        balance = self.tree.get_balance(unbalanced_node)
+        rprint(
+            f&#34;[yellow]Hint for balancing node {unbalanced_node.value} (balance: {balance}):[/yellow]&#34;
+        )
+
+        # Provide guidance on what rotation is needed
+        if balance &gt; 1:
+            left_balance = self.tree.get_balance(unbalanced_node.left)
+            if left_balance &gt;= 0:
+                rprint(
+                    f&#34;[yellow]→ Try &#39;rotate right {unbalanced_node.value}&#39; (Left-Left case)[/yellow]&#34;
+                )
+            else:
+                rprint(
+                    f&#34;[yellow]→ First &#39;rotate left {unbalanced_node.left.value}&#39;, then &#39;rotate right {unbalanced_node.value}&#39; (Left-Right case)[/yellow]&#34;
+                )
+        else:
+            right_balance = self.tree.get_balance(unbalanced_node.right)
+            if right_balance &lt;= 0:
+                rprint(
+                    f&#34;[yellow]→ Try &#39;rotate left {unbalanced_node.value}&#39; (Right-Right case)[/yellow]&#34;
+                )
+            else:
+                rprint(
+                    f&#34;[yellow]→ First &#39;rotate right {unbalanced_node.right.value}&#39;, then &#39;rotate left {unbalanced_node.value}&#39; (Right-Left case)[/yellow]&#34;
+                )
+
+    def _is_rotation_needed(self, value: int, direction: str) -&gt; bool:
+        &#34;&#34;&#34;
+        Check if a rotation on the given node is the correct next step.
+
+        Validates whether the specified rotation is appropriate for balancing
+        the tree in practice mode.
+
+        Args:
+            value (int): Value of the node to rotate
+            direction (str): Direction of rotation (&#34;left&#34; or &#34;right&#34;)
+
+        Returns:
+            bool: True if the rotation is needed and correct, False otherwise
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Check if a rotation on the given node is the correct next step&#34;&#34;&#34;
+        node = self.tree.search(value)
+        if not node:
+            return False
+
+        # First, check if this node itself is unbalanced and needs the specified rotation
+        balance = self.tree.get_balance(node)
+        if abs(balance) &gt; 1:
+            # Check if the rotation direction is correct for this unbalanced node
+            if balance &gt; 1 and direction == &#34;right&#34;:
+                # Left-heavy, right rotation might be correct
+                left_balance = self.tree.get_balance(node.left)
+                return left_balance &gt;= 0  # Simple right rotation
+            elif balance &lt; -1 and direction == &#34;left&#34;:
+                # Right-heavy, left rotation might be correct
+                right_balance = self.tree.get_balance(node.right)
+                return right_balance &lt;= 0  # Simple left rotation
+
+        # Second, check if this is the correct first step in a double rotation
+        # We need to find an unbalanced ancestor that would need this rotation as part of its balancing
+        unbalanced_ancestor = self._find_unbalanced_ancestor_needing_rotation(
+            node, direction
+        )
+        return unbalanced_ancestor is not None
+
+    def _find_unbalanced_ancestor_needing_rotation(
+        self, node: Node, direction: str
+    ) -&gt; Optional[Node]:
+        &#34;&#34;&#34;
+        Find an unbalanced ancestor that needs the given rotation as first step.
+
+        Used for validating double rotation sequences in practice mode.
+
+        Args:
+            node (Node): The node that would be rotated
+            direction (str): Direction of the proposed rotation
+
+        Returns:
+            Optional[Node]: Unbalanced ancestor if rotation is correct, None otherwise
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Find an unbalanced ancestor that needs the given rotation on this node as first step&#34;&#34;&#34;
+        # Search for an unbalanced ancestor
+        current = self.tree.root
+
+        while current:
+            balance = self.tree.get_balance(current)
+            if abs(balance) &gt; 1:
+                # Found an unbalanced node, check if it needs this rotation
+                if balance &gt; 1 and direction == &#34;left&#34; and current.left == node:
+                    # Left-heavy ancestor, needs left rotation on left child (LR case)
+                    left_balance = self.tree.get_balance(current.left)
+                    return current if left_balance &lt; 0 else None
+                elif balance &lt; -1 and direction == &#34;right&#34; and current.right == node:
+                    # Right-heavy ancestor, needs right rotation on right child (RL case)
+                    right_balance = self.tree.get_balance(current.right)
+                    return current if right_balance &gt; 0 else None
+
+            # Continue searching down the tree towards the node
+            if node.value &lt; current.value:
+                current = current.left
+            elif node.value &gt; current.value:
+                current = current.right
+            else:
+                break
+
+        return None
+
+    def _show_status(self):
+        &#34;&#34;&#34;Show current configuration and tree status&#34;&#34;&#34;
+        rprint(&#34;[bold]Current Configuration:[/bold]&#34;)
+        rprint(f&#34;  Mode: {self.mode.title()}&#34;)
+        rprint(f&#34;  Auto-show tree: {&#39;On&#39; if self.auto_show_tree else &#39;Off&#39;}&#34;)
+        rprint(f&#34;  Show steps: {&#39;On&#39; if self.show_steps else &#39;Off&#39;}&#34;)
+
+        if self.tree.root:
+            height = self._get_tree_height(self.tree.root)
+            unbalanced = self._find_unbalanced_node(self.tree.root)
+            rprint(f&#34;\n[bold]Tree Status:[/bold]&#34;)
+            rprint(f&#34;  Height: {height}&#34;)
+            rprint(f&#34;  Balanced: {&#39;No&#39; if unbalanced else &#39;Yes&#39;}&#34;)
+            if unbalanced:
+                balance = self.tree.get_balance(unbalanced)
+                rprint(f&#34;  Unbalanced node: {unbalanced.value} (balance: {balance})&#34;)
+        else:
+            rprint(f&#34;\n[bold]Tree Status:[/bold] Empty&#34;)
+
+    def _get_tree_height(self, node: Optional[Node]) -&gt; int:
+        &#34;&#34;&#34;
+        Calculate the height of the tree.
+
+        Args:
+            node (Optional[Node]): Root of the subtree
+
+        Returns:
+            int: Height of the tree (0 for empty tree)
+        &#34;&#34;&#34;
+        if not node:
+            return 0
+        return 1 + max(
+            self._get_tree_height(node.left), self._get_tree_height(node.right)
+        )
+
+    def _print_fancy_grid(self, grid: List[List[str]]) -&gt; None:
+        &#34;&#34;&#34;
+        Print the grid in fancy tabulate/grid style.
+
+        Args:
+            grid (List[List[str]]): 2D grid of cell values
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Print the grid in fancy tabulate/grid style&#34;&#34;&#34;
+        if not grid:
+            return
+
+        # Create separator line
+        separator = &#34;+&#34; + &#34;+&#34;.join([&#34;-&#34; * 3 for _ in range(len(grid[0]))]) + &#34;+&#34;
+
+        # Print top border
+        rprint(f&#34;[cyan]{separator}[/cyan]&#34;)
+
+        # Print each row with borders
+        for row in grid:
+            row_str = &#34;|&#34; + &#34;|&#34;.join([f&#34;{cell:^3}&#34; for cell in row]) + &#34;|&#34;
+            rprint(f&#34;[cyan]{row_str}[/cyan]&#34;)
+            rprint(f&#34;[cyan]{separator}[/cyan]&#34;)
+
+    def _print_fancy_grid_colored(self, grid: List[List[Dict[str, Any]]]) -&gt; None:
+        &#34;&#34;&#34;
+        Print the grid in fancy tabulate/grid style with colors and connectors.
+
+        Args:
+            grid (List[List[Dict[str, Any]]]): 2D grid of cell dictionaries with &#39;value&#39; and &#39;color&#39; keys
+        &#34;&#34;&#34;
+        &#34;&#34;&#34;Print the grid in fancy tabulate/grid style with colors and connectors&#34;&#34;&#34;
+        if not grid:
+            return
+
+        # Create separator line
+        separator = &#34;+&#34; + &#34;+&#34;.join([&#34;-&#34; * 3 for _ in range(len(grid[0]))]) + &#34;+&#34;
+
+        # Print top border
+        rprint(f&#34;[cyan]{separator}[/cyan]&#34;)
+
+        # Print each row with borders and colors
+        for row in grid:
+            colored_cells = []
+            for cell in row:
+                cell_value = cell[&#34;value&#34;]
+                cell_color = cell[&#34;color&#34;]
+
+                # Handle empty cells
+                if cell_value == &#34; &#34;:
+                    colored_cells.append(&#34;   &#34;)
+                elif cell_color:
+                    colored_cells.append(
+                        f&#34;[{cell_color}]{cell_value:^3}[/{cell_color}]&#34;
+                    )
+                else:
+                    # Special formatting for connector characters
+                    if cell_value in [&#34;╩&#34;, &#34;&lt;&#34;, &#34;&gt;&#34;]:
+                        colored_cells.append(f&#34;[dim white]{cell_value:^3}[/dim white]&#34;)
+                    else:
+                        colored_cells.append(f&#34;{cell_value:^3}&#34;)
+
+            row_str = (
+                &#34;[cyan]|[/cyan]&#34;
+                + &#34;[cyan]|[/cyan]&#34;.join(colored_cells)
+                + &#34;[cyan]|[/cyan]&#34;
+            )
+            rprint(row_str)
+            rprint(f&#34;[cyan]{separator}[/cyan]&#34;)
+
+    def show_help(self) -&gt; None:
+        &#34;&#34;&#34;
+        Display help information about available commands.
+
+        Shows comprehensive help including commands, multiple command usage,
+        configuration options, and visual indicators.
+        &#34;&#34;&#34;
+        rprint(&#34;[bold]Commands:[/bold]&#34;)
+        rprint(&#34;  a &lt;value&gt;             - Add a node (values: -99 to 999)&#34;)
+        rprint(&#34;  d &lt;value&gt;             - Delete a node (values: -99 to 999)&#34;)
+        rprint(&#34;  rl &lt;value&gt;            - Left rotation&#34;)
+        rprint(&#34;  rr &lt;value&gt;            - Right rotation&#34;)
+        rprint(&#34;  tree                  - Display current tree&#34;)
+        rprint(&#34;  clear                 - Clear screen&#34;)
+        rprint(&#34;  reset                 - Reset tree&#34;)
+        rprint(&#34;  status                - Show configuration and tree status&#34;)
+        rprint(&#34;  hint                  - Show balancing hints (practice mode)&#34;)
+        rprint(&#34;  preorder              - Show preorder traversal&#34;)
+        rprint(&#34;  inorder               - Show inorder traversal&#34;)
+        rprint(&#34;  postorder             - Show postorder traversal&#34;)
+        rprint(&#34;  help                  - Show this&#34;)
+        rprint(&#34;  exit                  - Quit&#34;)
+        rprint(&#34;\n[bold]Multiple Commands:[/bold]&#34;)
+        rprint(&#34;  You can chain commands: &#39;a 10 a 20 d 10&#39;&#34;)
+        rprint(&#34;  Example: &#39;a 10 a 20 a 30 a 40 a 50&#39; adds multiple nodes&#34;)
+        rprint(&#34;\n[bold]Configuration:[/bold]&#34;)
+        rprint(&#34;  config autoshow on/off    - Toggle auto-show tree&#34;)
+        rprint(&#34;  config steps on/off       - Toggle show rotation steps&#34;)
+        rprint(&#34;  config mode &lt;mode&gt;        - Set mode:&#34;)
+        rprint(&#34;    • automatic  - Auto-balance&#34;)
+        rprint(&#34;    • practice   - Guide learning (only allow correct rotations).&#34;)
+        rprint(&#34;\n[bold]Visual Indicators:[/bold]&#34;)
+        rprint(&#34;  [bright_green]Green nodes[/bright_green]  - Recently added&#34;)
+        rprint(&#34;  [red]Red nodes[/red]    - Unbalanced (need rotation)&#34;)
+
+    def _show_preorder(self) -&gt; None:
+        &#34;&#34;&#34;
+        Show preorder traversal of the tree.
+
+        Displays nodes in root -&gt; left -&gt; right order.
+        &#34;&#34;&#34;
+        if not self.tree.root:
+            rprint(&#34;[yellow]Tree is empty[/yellow]&#34;)
+            return
+
+        traversal = []
+        self._preorder_traversal(self.tree.root, traversal)
+        rprint(f&#34;[bold]Preorder traversal:[/bold] {&#39; -&gt; &#39;.join(map(str, traversal))}&#34;)
+
+    def _show_inorder(self) -&gt; None:
+        &#34;&#34;&#34;
+        Show inorder traversal of the tree.
+
+        Displays nodes in left -&gt; root -&gt; right order (sorted order for BST).
+        &#34;&#34;&#34;
+        if not self.tree.root:
+            rprint(&#34;[yellow]Tree is empty[/yellow]&#34;)
+            return
+
+        traversal = []
+        self._inorder_traversal(self.tree.root, traversal)
+        rprint(f&#34;[bold]Inorder traversal:[/bold] {&#39; -&gt; &#39;.join(map(str, traversal))}&#34;)
+
+    def _show_postorder(self) -&gt; None:
+        &#34;&#34;&#34;
+        Show postorder traversal of the tree.
+
+        Displays nodes in left -&gt; right -&gt; root order.
+        &#34;&#34;&#34;
+        if not self.tree.root:
+            rprint(&#34;[yellow]Tree is empty[/yellow]&#34;)
+            return
+
+        traversal = []
+        self._postorder_traversal(self.tree.root, traversal)
+        rprint(f&#34;[bold]Postorder traversal:[/bold] {&#39; -&gt; &#39;.join(map(str, traversal))}&#34;)
+
+    def _preorder_traversal(self, node: Optional[Node], traversal: List[int]) -&gt; None:
+        &#34;&#34;&#34;
+        Perform preorder traversal: root -&gt; left -&gt; right.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            traversal (List[int]): List to store traversal results
+        &#34;&#34;&#34;
+        if node:
+            traversal.append(node.value)
+            self._preorder_traversal(node.left, traversal)
+            self._preorder_traversal(node.right, traversal)
+
+    def _inorder_traversal(self, node: Optional[Node], traversal: List[int]) -&gt; None:
+        &#34;&#34;&#34;
+        Perform inorder traversal: left -&gt; root -&gt; right.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            traversal (List[int]): List to store traversal results
+        &#34;&#34;&#34;
+        if node:
+            self._inorder_traversal(node.left, traversal)
+            traversal.append(node.value)
+            self._inorder_traversal(node.right, traversal)
+
+    def _postorder_traversal(self, node: Optional[Node], traversal: List[int]) -&gt; None:
+        &#34;&#34;&#34;
+        Perform postorder traversal: left -&gt; right -&gt; root.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            traversal (List[int]): List to store traversal results
+        &#34;&#34;&#34;
+        if node:
+            self._postorder_traversal(node.left, traversal)
+            self._postorder_traversal(node.right, traversal)
+            traversal.append(node.value)</code></pre>
+</details>
+<div class="desc"><p>Interactive command-line interface for practicing AVL tree operations.</p>
+<p>This CLI provides two learning modes:
+- Automatic mode: Tree automatically balances after insertions/deletions
+- Practice mode: User manually applies rotations with guided hints</p>
+<p>Features include visual tree display, step-by-step balancing guidance,
+multiple command chaining, and tree traversal operations.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>tree</code></strong> :&ensp;<code>AVLTree</code></dt>
+<dd>The AVL tree instance</dd>
+<dt><strong><code>console</code></strong> :&ensp;<code>Console</code></dt>
+<dd>Rich console for colored output</dd>
+<dt><strong><code>auto_show_tree</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to display tree after each command</dd>
+<dt><strong><code>mode</code></strong> :&ensp;<code>str</code></dt>
+<dd>Current mode ("automatic" or "practice")</dd>
+<dt><strong><code>show_steps</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to show step-by-step rotation details</dd>
+<dt><strong><code>recently_added</code></strong> :&ensp;<code>Optional[int]</code></dt>
+<dd>Value of recently added node for highlighting</dd>
+<dt><strong><code>recently_removed</code></strong> :&ensp;<code>Optional[int]</code></dt>
+<dd>Value of recently removed node for highlighting</dd>
+</dl>
+<p>Initialize the AVL Tree CLI with default settings.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="avltreecli.cli.AVLTreeCLI.display_tree"><code class="name flex">
+<span>def <span class="ident">display_tree</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display_tree(self) -&gt; None:
+    &#34;&#34;&#34;
+    Display the tree in a fancy grid format with visual connectors.
+
+    Creates a visual representation of the AVL tree using a grid layout
+    with connecting lines and color-coded nodes. Empty trees display
+    a simple message.
+    &#34;&#34;&#34;
+    &#34;&#34;&#34;Display the tree in a fancy grid format with visual connectors&#34;&#34;&#34;
+    if not self.tree.root:
+        rprint(&#34;[yellow]Tree is empty[/yellow]&#34;)
+        return
+
+    # Calculate tree dimensions
+    height = self._get_tree_height(self.tree.root)
+    cols = 2**height - 1  # Total columns needed
+
+    # Create a grid to hold the tree with color information
+    grid = [
+        [{&#34;value&#34;: &#34; &#34;, &#34;color&#34;: None} for _ in range(cols)] for _ in range(height)
+    ]
+
+    # Get all nodes organized by level
+    levels = self._get_tree_levels_with_positions(self.tree.root)
+
+    # Get unbalanced nodes for coloring
+    unbalanced_nodes = self._get_all_unbalanced_nodes(self.tree.root)
+
+    # Place nodes and connectors in the grid
+    for level_idx, level_nodes in enumerate(levels):
+        if level_idx &gt;= height:
+            break
+
+        # Calculate positions for this level
+        positions = self._calculate_level_positions(level_idx, height, cols)
+
+        # Place each node at its calculated position with appropriate color
+        for i, node in enumerate(level_nodes):
+            if i &lt; len(positions) and node is not None:
+                col = positions[i]
+                if 0 &lt;= col &lt; cols:
+                    node_value = str(node.value)
+                    node_color = self._get_node_color(node.value, unbalanced_nodes)
+                    grid[level_idx][col] = {
+                        &#34;value&#34;: node_value,
+                        &#34;color&#34;: node_color,
+                    }
+
+                    # Add connectors if not the last level
+                    if level_idx &lt; height - 1:
+                        # Add ╩ below parent if it has children
+                        if node.left or node.right:
+                            if level_idx + 1 &lt; height:
+                                grid[level_idx + 1][col] = {
+                                    &#34;value&#34;: &#34;╩&#34;,
+                                    &#34;color&#34;: None,
+                                }
+
+                        # Add connecting lines for left child
+                        if node.left and level_idx + 1 &lt; len(levels):
+                            left_positions = self._calculate_level_positions(
+                                level_idx + 1, height, cols
+                            )
+                            left_child_idx = i * 2
+                            if left_child_idx &lt; len(left_positions):
+                                left_col = left_positions[left_child_idx]
+                                if left_col &lt; col and level_idx + 1 &lt; height:
+                                    # Fill the path from trunk to left child with &#39;&lt;&#39;
+                                    for path_col in range(left_col + 1, col):
+                                        grid[level_idx + 1][path_col] = {
+                                            &#34;value&#34;: &#34;&lt;&#34;,
+                                            &#34;color&#34;: None,
+                                        }
+
+                        # Add connecting lines for right child
+                        if node.right and level_idx + 1 &lt; len(levels):
+                            right_positions = self._calculate_level_positions(
+                                level_idx + 1, height, cols
+                            )
+                            right_child_idx = i * 2 + 1
+                            if right_child_idx &lt; len(right_positions):
+                                right_col = right_positions[right_child_idx]
+                                if right_col &gt; col and level_idx + 1 &lt; height:
+                                    # Fill the path from trunk to right child with &#39;&gt;&#39;
+                                    for path_col in range(col + 1, right_col):
+                                        grid[level_idx + 1][path_col] = {
+                                            &#34;value&#34;: &#34;&gt;&#34;,
+                                            &#34;color&#34;: None,
+                                        }
+
+    # Print the fancy grid with colors and connectors
+    self._print_fancy_grid_colored(grid)</code></pre>
+</details>
+<div class="desc"><p>Display the tree in a fancy grid format with visual connectors.</p>
+<p>Creates a visual representation of the AVL tree using a grid layout
+with connecting lines and color-coded nodes. Empty trees display
+a simple message.</p></div>
+</dd>
+<dt id="avltreecli.cli.AVLTreeCLI.process_command"><code class="name flex">
+<span>def <span class="ident">process_command</span></span>(<span>self, command: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_command(self, command: str) -&gt; None:
+    &#34;&#34;&#34;
+    Process a single command with its arguments.
+
+    Handles all supported commands including add, delete, rotate, config,
+    display, status, hint, traversals, and utility commands.
+
+    Args:
+        command (str): The command string to process
+    &#34;&#34;&#34;
+    parts = command.split()
+    if not parts:
+        return
+    cmd = parts[0]
+    args = parts[1:]
+
+    try:
+        if cmd == &#34;a&#34; and len(args) == 1:
+            value = int(args[0])
+
+            # Check if value is within allowed range (-99 to 999)
+            if value &lt; -99 or value &gt; 999:
+                rprint(
+                    f&#34;[red]Value {value} is out of range! Please use values from -99 to 999 to maintain grid formatting.[/red]&#34;
+                )
+                return
+
+            # Check if value already exists in the tree
+            if self.tree.search(value):
+                rprint(
+                    f&#34;[red]Value {value} already exists in the tree! Cannot add duplicates.[/red]&#34;
+                )
+                return
+
+            self.recently_added = value  # Track the recently added node
+            self.recently_removed = None  # Clear recently removed
+            if self.mode == &#34;automatic&#34;:
+                self._insert_with_auto_balance(value)
+            elif self.mode == &#34;practice&#34;:
+                # Check if tree is already unbalanced
+                if self._find_unbalanced_node(self.tree.root):
+                    rprint(
+                        &#34;[yellow]Tree is currently unbalanced! Please balance it first before adding new nodes.[/yellow]&#34;
+                    )
+                    rprint(
+                        &#34;[yellow]Use &#39;hint&#39; command for guidance on how to balance it.[/yellow]&#34;
+                    )
+                    return
+                # In practice mode, insert without auto-balancing
+                self.tree.root = self._insert_manual(self.tree.root, value)
+                self._check_balance_and_guide()
+            rprint(f&#34;[green]Added {value} to the tree[/green]&#34;)
+            if self.auto_show_tree:
+                self.display_tree()
+
+            # In automatic mode, clear recently added tracking after final display
+            # only if the tree is balanced (so green shows during steps but clears after)
+            if self.mode == &#34;automatic&#34; and not self._find_unbalanced_node(
+                self.tree.root
+            ):
+                self.recently_added = None
+
+        elif cmd == &#34;d&#34; and len(args) == 1:
+            value = int(args[0])
+
+            # Check if value is within allowed range (-99 to 999)
+            if value &lt; -99 or value &gt; 999:
+                rprint(
+                    f&#34;[red]Value {value} is out of range! Please use values from -99 to 999.[/red]&#34;
+                )
+                return
+
+            # Check if value exists in the tree before trying to remove it
+            if not self.tree.search(value):
+                rprint(
+                    f&#34;[red]Value {value} not found in the tree! Cannot remove.[/red]&#34;
+                )
+                return
+
+            self.recently_removed = value  # Track the recently removed node
+            self.recently_added = None  # Clear recently added
+            if self.mode == &#34;automatic&#34;:
+                self._delete_with_auto_balance(value)
+            elif self.mode == &#34;practice&#34;:
+                # Check if tree is already unbalanced
+                if self._find_unbalanced_node(self.tree.root):
+                    rprint(
+                        &#34;[yellow]Tree is currently unbalanced! Please balance it first before removing nodes.[/yellow]&#34;
+                    )
+                    rprint(
+                        &#34;[yellow]Use &#39;hint&#39; command for guidance on how to balance it.[/yellow]&#34;
+                    )
+                    return
+                # In practice mode, delete without auto-balancing
+                self.tree.root = self._delete_manual(self.tree.root, value)
+                self._check_balance_and_guide()
+            rprint(f&#34;[green]Removed {value} from the tree[/green]&#34;)
+            if self.auto_show_tree:
+                self.display_tree()
+
+            # In automatic mode, clear recently removed tracking after final display
+            # only if the tree is balanced (so coloring shows during steps but clears after)
+            if self.mode == &#34;automatic&#34; and not self._find_unbalanced_node(
+                self.tree.root
+            ):
+                self.recently_removed = None
+
+        elif cmd in [&#34;rr&#34;, &#34;rl&#34;] and len(args) == 1:
+            if self.mode == &#34;automatic&#34;:
+                rprint(
+                    &#34;[yellow]Rotate commands are disabled in automatic mode[/yellow]&#34;
+                )
+                return
+
+            # Handle different command formats
+            if cmd == &#34;rr&#34;:
+                direction = &#34;right&#34;
+                value = int(args[0])
+            elif cmd == &#34;rl&#34;:
+                direction = &#34;left&#34;
+                value = int(args[0])
+
+            # Check if value is within allowed range (-99 to 999)
+            if value &lt; -99 or value &gt; 999:
+                rprint(
+                    f&#34;[red]Value {value} is out of range! Please use values from -99 to 999.[/red]&#34;
+                )
+                return
+
+            node = self.tree.search(value)
+            if not node:
+                rprint(&#34;[red]Node not found[/red]&#34;)
+                return
+
+            if self.mode == &#34;practice&#34;:
+                if not self._is_rotation_needed(value, direction):
+                    rprint(
+                        &#34;[yellow]This rotation is not needed or correct right now. Try to balance the tree properly.[/yellow]&#34;
+                    )
+                    return
+
+            if direction == &#34;left&#34;:
+                # Find parent to properly update tree structure
+                if node == self.tree.root:
+                    self.tree.root = self.tree.left_rotate(node)
+                else:
+                    self._rotate_node_and_update_parent(node, &#34;left&#34;)
+                # Update heights throughout the tree after manual rotation
+                self._update_all_heights(self.tree.root)
+                rprint(f&#34;[green]Performed left rotation on node {value}[/green]&#34;)
+            elif direction == &#34;right&#34;:
+                # Find parent to properly update tree structure
+                if node == self.tree.root:
+                    self.tree.root = self.tree.right_rotate(node)
+                else:
+                    self._rotate_node_and_update_parent(node, &#34;right&#34;)
+                # Update heights throughout the tree after manual rotation
+                self._update_all_heights(self.tree.root)
+                rprint(f&#34;[green]Performed right rotation on node {value}[/green]&#34;)
+            else:
+                rprint(&#34;[red]Use &#39;left&#39; or &#39;right&#39;[/red]&#34;)
+                return
+
+            # Clear recently added/removed tracking after rotation
+            self.recently_added = None
+            self.recently_removed = None
+
+            if self.auto_show_tree:
+                self.display_tree()
+
+            # After rotation in practice mode, check if tree is now balanced
+            if self.mode == &#34;practice&#34;:
+                self._check_balance_and_guide()
+
+        elif cmd == &#34;config&#34; and len(args) &gt;= 2:
+            self._handle_config(args)
+
+        elif cmd == &#34;clear&#34;:
+            self.console.clear()
+            rprint(&#34;[bold green]AVL Tree Practice Tool[/bold green]&#34;)
+            rprint(f&#34;[bold]Mode:[/bold] {self.mode.title()}&#34;)
+            rprint(
+                f&#34;[bold]Auto-show tree:[/bold] {&#39;On&#39; if self.auto_show_tree else &#39;Off&#39;}&#34;
+            )
+            rprint(
+                f&#34;[bold]Show steps:[/bold] {&#39;On&#39; if self.show_steps else &#39;Off&#39;}\n&#34;
+            )
+            rprint(&#34;[green]Screen cleared[/green]&#34;)
+            if self.auto_show_tree and self.tree.root:
+                self.display_tree()
+
+        elif cmd == &#34;reset&#34;:
+            self.tree = AVLTree()
+            self.recently_added = None
+            self.recently_removed = None
+            rprint(&#34;[green]Tree reset[/green]&#34;)
+            if self.auto_show_tree:
+                self.display_tree()
+
+        elif cmd == &#34;tree&#34;:
+            self.display_tree()
+            return
+
+        elif cmd == &#34;status&#34;:
+            self._show_status()
+            return
+
+        elif cmd == &#34;hint&#34;:
+            self._show_hint()
+            return
+
+        elif cmd == &#34;preorder&#34;:
+            self._show_preorder()
+            return
+
+        elif cmd == &#34;inorder&#34;:
+            self._show_inorder()
+            return
+
+        elif cmd == &#34;postorder&#34;:
+            self._show_postorder()
+            return
+
+        elif cmd == &#34;help&#34;:
+            self.show_help()
+            return
+        else:
+            rprint(&#34;[red]Invalid command. Try &#39;help&#39;.[/red]&#34;)
+            return
+    except ValueError:
+        rprint(&#34;[red]Invalid number[/red]&#34;)</code></pre>
+</details>
+<div class="desc"><p>Process a single command with its arguments.</p>
+<p>Handles all supported commands including add, delete, rotate, config,
+display, status, hint, traversals, and utility commands.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>command</code></strong> :&ensp;<code>str</code></dt>
+<dd>The command string to process</dd>
+</dl></div>
+</dd>
+<dt id="avltreecli.cli.AVLTreeCLI.process_command_line"><code class="name flex">
+<span>def <span class="ident">process_command_line</span></span>(<span>self, command_line: str) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def process_command_line(self, command_line: str) -&gt; None:
+    &#34;&#34;&#34;
+    Process a line that may contain multiple commands.
+
+    Args:
+        command_line (str): The input line containing one or more commands
+    &#34;&#34;&#34;
+    &#34;&#34;&#34;Process a line that may contain multiple commands&#34;&#34;&#34;
+    if not command_line:
+        return
+
+    # Split the command line into individual commands
+    commands = self._parse_multiple_commands(command_line)
+
+    for command in commands:
+        if command == &#34;exit&#34;:
+            return
+        self.process_command(command)</code></pre>
+</details>
+<div class="desc"><p>Process a line that may contain multiple commands.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>command_line</code></strong> :&ensp;<code>str</code></dt>
+<dd>The input line containing one or more commands</dd>
+</dl></div>
+</dd>
+<dt id="avltreecli.cli.AVLTreeCLI.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self) -&gt; None:
+    &#34;&#34;&#34;
+    Main CLI loop that handles user input and command processing.
+
+    Displays welcome message and continuously processes user commands
+    until the user types &#39;exit&#39;.
+    &#34;&#34;&#34;
+    self.console.clear()
+    rprint(&#34;[bold green]AVL Tree Practice Tool[/bold green]&#34;)
+    rprint(f&#34;[bold]Mode:[/bold] {self.mode.title()}&#34;)
+    rprint(f&#34;[bold]Auto-show tree:[/bold] {&#39;On&#39; if self.auto_show_tree else &#39;Off&#39;}&#34;)
+    rprint(f&#34;[bold]Show steps:[/bold] {&#39;On&#39; if self.show_steps else &#39;Off&#39;}\n&#34;)
+    rprint(&#34;Type &#39;help&#39; for commands.&#34;)
+    while True:
+        command_line = input(&#34;&gt; &#34;).strip().lower()
+        if command_line == &#34;exit&#34;:
+            break
+        self.process_command_line(command_line)</code></pre>
+</details>
+<div class="desc"><p>Main CLI loop that handles user input and command processing.</p>
+<p>Displays welcome message and continuously processes user commands
+until the user types 'exit'.</p></div>
+</dd>
+<dt id="avltreecli.cli.AVLTreeCLI.show_help"><code class="name flex">
+<span>def <span class="ident">show_help</span></span>(<span>self) ‑> None</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def show_help(self) -&gt; None:
+    &#34;&#34;&#34;
+    Display help information about available commands.
+
+    Shows comprehensive help including commands, multiple command usage,
+    configuration options, and visual indicators.
+    &#34;&#34;&#34;
+    rprint(&#34;[bold]Commands:[/bold]&#34;)
+    rprint(&#34;  a &lt;value&gt;             - Add a node (values: -99 to 999)&#34;)
+    rprint(&#34;  d &lt;value&gt;             - Delete a node (values: -99 to 999)&#34;)
+    rprint(&#34;  rl &lt;value&gt;            - Left rotation&#34;)
+    rprint(&#34;  rr &lt;value&gt;            - Right rotation&#34;)
+    rprint(&#34;  tree                  - Display current tree&#34;)
+    rprint(&#34;  clear                 - Clear screen&#34;)
+    rprint(&#34;  reset                 - Reset tree&#34;)
+    rprint(&#34;  status                - Show configuration and tree status&#34;)
+    rprint(&#34;  hint                  - Show balancing hints (practice mode)&#34;)
+    rprint(&#34;  preorder              - Show preorder traversal&#34;)
+    rprint(&#34;  inorder               - Show inorder traversal&#34;)
+    rprint(&#34;  postorder             - Show postorder traversal&#34;)
+    rprint(&#34;  help                  - Show this&#34;)
+    rprint(&#34;  exit                  - Quit&#34;)
+    rprint(&#34;\n[bold]Multiple Commands:[/bold]&#34;)
+    rprint(&#34;  You can chain commands: &#39;a 10 a 20 d 10&#39;&#34;)
+    rprint(&#34;  Example: &#39;a 10 a 20 a 30 a 40 a 50&#39; adds multiple nodes&#34;)
+    rprint(&#34;\n[bold]Configuration:[/bold]&#34;)
+    rprint(&#34;  config autoshow on/off    - Toggle auto-show tree&#34;)
+    rprint(&#34;  config steps on/off       - Toggle show rotation steps&#34;)
+    rprint(&#34;  config mode &lt;mode&gt;        - Set mode:&#34;)
+    rprint(&#34;    • automatic  - Auto-balance&#34;)
+    rprint(&#34;    • practice   - Guide learning (only allow correct rotations).&#34;)
+    rprint(&#34;\n[bold]Visual Indicators:[/bold]&#34;)
+    rprint(&#34;  [bright_green]Green nodes[/bright_green]  - Recently added&#34;)
+    rprint(&#34;  [red]Red nodes[/red]    - Unbalanced (need rotation)&#34;)</code></pre>
+</details>
+<div class="desc"><p>Display help information about available commands.</p>
+<p>Shows comprehensive help including commands, multiple command usage,
+configuration options, and visual indicators.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="avltreecli" href="index.html">avltreecli</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="avltreecli.cli.main" href="#avltreecli.cli.main">main</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="avltreecli.cli.AVLTreeCLI" href="#avltreecli.cli.AVLTreeCLI">AVLTreeCLI</a></code></h4>
+<ul class="">
+<li><code><a title="avltreecli.cli.AVLTreeCLI.display_tree" href="#avltreecli.cli.AVLTreeCLI.display_tree">display_tree</a></code></li>
+<li><code><a title="avltreecli.cli.AVLTreeCLI.process_command" href="#avltreecli.cli.AVLTreeCLI.process_command">process_command</a></code></li>
+<li><code><a title="avltreecli.cli.AVLTreeCLI.process_command_line" href="#avltreecli.cli.AVLTreeCLI.process_command_line">process_command_line</a></code></li>
+<li><code><a title="avltreecli.cli.AVLTreeCLI.run" href="#avltreecli.cli.AVLTreeCLI.run">run</a></code></li>
+<li><code><a title="avltreecli.cli.AVLTreeCLI.show_help" href="#avltreecli.cli.AVLTreeCLI.show_help">show_help</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
