@@ -325,7 +325,7 @@ class AVLTreeCLI:
             rprint("[red]Invalid number[/red]")
 
     def display_tree(self):
-        """Display the tree in a fancy grid format using mathematical positioning with colors"""
+        """Display the tree in a fancy grid format with visual connectors"""
         if not self.tree.root:
             rprint("[yellow]Tree is empty[/yellow]")
             return
@@ -336,7 +336,7 @@ class AVLTreeCLI:
 
         # Create a grid to hold the tree with color information
         grid = [
-            [{"value": "-", "color": None} for _ in range(cols)] for _ in range(height)
+            [{"value": " ", "color": None} for _ in range(cols)] for _ in range(height)
         ]
 
         # Get all nodes organized by level
@@ -345,7 +345,7 @@ class AVLTreeCLI:
         # Get unbalanced nodes for coloring
         unbalanced_nodes = self._get_all_unbalanced_nodes(self.tree.root)
 
-        # Place nodes in the grid using mathematical positioning with colors
+        # Place nodes and connectors in the grid
         for level_idx, level_nodes in enumerate(levels):
             if level_idx >= height:
                 break
@@ -365,7 +365,49 @@ class AVLTreeCLI:
                             "color": node_color,
                         }
 
-        # Print the fancy grid with colors
+                        # Add connectors if not the last level
+                        if level_idx < height - 1:
+                            # Add ╩ below parent if it has children
+                            if node.left or node.right:
+                                if level_idx + 1 < height:
+                                    grid[level_idx + 1][col] = {
+                                        "value": "╩",
+                                        "color": None,
+                                    }
+
+                            # Add connecting lines for left child
+                            if node.left and level_idx + 1 < len(levels):
+                                left_positions = self._calculate_level_positions(
+                                    level_idx + 1, height, cols
+                                )
+                                left_child_idx = i * 2
+                                if left_child_idx < len(left_positions):
+                                    left_col = left_positions[left_child_idx]
+                                    if left_col < col and level_idx + 1 < height:
+                                        # Fill the path from trunk to left child with '<'
+                                        for path_col in range(left_col + 1, col):
+                                            grid[level_idx + 1][path_col] = {
+                                                "value": "<",
+                                                "color": None,
+                                            }
+
+                            # Add connecting lines for right child
+                            if node.right and level_idx + 1 < len(levels):
+                                right_positions = self._calculate_level_positions(
+                                    level_idx + 1, height, cols
+                                )
+                                right_child_idx = i * 2 + 1
+                                if right_child_idx < len(right_positions):
+                                    right_col = right_positions[right_child_idx]
+                                    if right_col > col and level_idx + 1 < height:
+                                        # Fill the path from trunk to right child with '>'
+                                        for path_col in range(col + 1, right_col):
+                                            grid[level_idx + 1][path_col] = {
+                                                "value": ">",
+                                                "color": None,
+                                            }
+
+        # Print the fancy grid with colors and connectors
         self._print_fancy_grid_colored(grid)
 
     def _calculate_level_positions(self, level, height, cols):
@@ -966,7 +1008,7 @@ class AVLTreeCLI:
             rprint(f"[cyan]{separator}[/cyan]")
 
     def _print_fancy_grid_colored(self, grid):
-        """Print the grid in fancy tabulate/grid style with colors"""
+        """Print the grid in fancy tabulate/grid style with colors and connectors"""
         if not grid:
             return
 
@@ -983,12 +1025,19 @@ class AVLTreeCLI:
                 cell_value = cell["value"]
                 cell_color = cell["color"]
 
-                if cell_color:
+                # Handle empty cells
+                if cell_value == " ":
+                    colored_cells.append("   ")
+                elif cell_color:
                     colored_cells.append(
                         f"[{cell_color}]{cell_value:^3}[/{cell_color}]"
                     )
                 else:
-                    colored_cells.append(f"{cell_value:^3}")
+                    # Special formatting for connector characters
+                    if cell_value in ["╩", "<", ">"]:
+                        colored_cells.append(f"[dim white]{cell_value:^3}[/dim white]")
+                    else:
+                        colored_cells.append(f"{cell_value:^3}")
 
             row_str = (
                 "[cyan]|[/cyan]"
