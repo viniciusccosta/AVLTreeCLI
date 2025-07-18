@@ -26,9 +26,7 @@ class AVLTreeCLI:
         rprint(f"[bold]Mode:[/bold] {self.mode.title()}")
         rprint(f"[bold]Auto-show tree:[/bold] {'On' if self.auto_show_tree else 'Off'}")
         rprint(f"[bold]Show steps:[/bold] {'On' if self.show_steps else 'Off'}\n")
-        rprint(
-            "Type 'help' for commands. You can chain multiple commands: 'a 10 a 20 d 10'"
-        )
+        rprint("Type 'help' for commands.")
         while True:
             command_line = input("> ").strip().lower()
             if command_line == "exit":

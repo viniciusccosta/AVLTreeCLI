@@ -11,11 +11,10 @@ dependencies = [
     "rich (>=14.0.0,<15.0.0)"
 ]
 
+[project.scripts]
+avltreecli = "avltreecli.cli:main"
+
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-
-[tool.poetry.scripts]
-avltreecli = "avl_tree_cli.cli:main"
