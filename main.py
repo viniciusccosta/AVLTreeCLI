@@ -156,6 +156,14 @@ class AVLTreeCLI:
         try:
             if (cmd == "add" or cmd == "a") and len(args) == 1:
                 value = int(args[0])
+
+                # Check if value already exists in the tree
+                if self.tree.search(value):
+                    rprint(
+                        f"[red]Value {value} already exists in the tree! Cannot add duplicates.[/red]"
+                    )
+                    return
+
                 self.recently_added = value  # Track the recently added node
                 self.recently_removed = None  # Clear recently removed
                 if self.mode == "automatic":
@@ -188,6 +196,14 @@ class AVLTreeCLI:
 
             elif (cmd == "remove" or cmd == "r") and len(args) == 1:
                 value = int(args[0])
+
+                # Check if value exists in the tree before trying to remove it
+                if not self.tree.search(value):
+                    rprint(
+                        f"[red]Value {value} not found in the tree! Cannot remove.[/red]"
+                    )
+                    return
+
                 self.recently_removed = value  # Track the recently removed node
                 self.recently_added = None  # Clear recently added
                 if self.mode == "automatic":
