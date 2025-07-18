@@ -21,7 +21,7 @@ cd avl-tree-practice
 pip install -r requirements.txt
 ```
 
-Make sure you have Python 3.7+ installed.
+Make sure you have Python 3.13 installed.
 
 ## Usage
 
