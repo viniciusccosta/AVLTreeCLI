@@ -26,12 +26,76 @@ class AVLTreeCLI:
         rprint(f"[bold]Mode:[/bold] {self.mode.title()}")
         rprint(f"[bold]Auto-show tree:[/bold] {'On' if self.auto_show_tree else 'Off'}")
         rprint(f"[bold]Show steps:[/bold] {'On' if self.show_steps else 'Off'}\n")
-        rprint("Type 'help' for commands.")
+        rprint(
+            "Type 'help' for commands. You can chain multiple commands: 'a 10 a 20 d 10'"
+        )
         while True:
-            command = input("> ").strip().lower()
-            if command == "exit":
+            command_line = input("> ").strip().lower()
+            if command_line == "exit":
                 break
+            self.process_command_line(command_line)
+
+    def process_command_line(self, command_line):
+        """Process a line that may contain multiple commands"""
+        if not command_line:
+            return
+
+        # Split the command line into individual commands
+        commands = self._parse_multiple_commands(command_line)
+
+        for command in commands:
+            if command == "exit":
+                return
             self.process_command(command)
+
+    def _parse_multiple_commands(self, command_line):
+        """Parse a command line into individual commands"""
+        commands = []
+        parts = command_line.split()
+        i = 0
+
+        while i < len(parts):
+            cmd = parts[i]
+
+            # Single word commands
+            if cmd in [
+                "tree",
+                "clear",
+                "reset",
+                "undo",
+                "redo",
+                "status",
+                "hint",
+                "preorder",
+                "inorder",
+                "postorder",
+                "help",
+                "exit",
+            ]:
+                commands.append(cmd)
+                i += 1
+
+            # Commands that take one argument
+            elif cmd in ["a", "d", "rr", "rl"] and i + 1 < len(parts):
+                commands.append(f"{cmd} {parts[i + 1]}")
+                i += 2
+
+            # Commands that take two arguments
+            elif cmd == "rotate" and i + 2 < len(parts):
+                commands.append(f"{cmd} {parts[i + 1]} {parts[i + 2]}")
+                i += 3
+
+            # Config commands that take two arguments
+            elif cmd == "config" and i + 2 < len(parts):
+                commands.append(f"{cmd} {parts[i + 1]} {parts[i + 2]}")
+                i += 3
+
+            # If we can't parse the command properly, treat it as a single command
+            else:
+                commands.append(cmd)
+                i += 1
+
+        return commands
 
     def process_command(self, command):
         parts = command.split()
@@ -41,7 +105,7 @@ class AVLTreeCLI:
         args = parts[1:]
 
         try:
-            if (cmd == "add" or cmd == "a") and len(args) == 1:
+            if cmd == "a" and len(args) == 1:
                 value = int(args[0])
 
                 # Check if value already exists in the tree
@@ -81,7 +145,7 @@ class AVLTreeCLI:
                 ):
                     self.recently_added = None
 
-            elif (cmd == "remove" or cmd == "r") and len(args) == 1:
+            elif cmd == "d" and len(args) == 1:
                 value = int(args[0])
 
                 # Check if value exists in the tree before trying to remove it
@@ -121,9 +185,7 @@ class AVLTreeCLI:
                 ):
                     self.recently_removed = None
 
-            elif (cmd == "rotate" and len(args) == 2) or (
-                cmd in ["rr", "rl"] and len(args) == 1
-            ):
+            elif cmd in ["rr", "rl"] and len(args) == 1:
                 if self.mode == "automatic":
                     rprint(
                         "[yellow]Rotate commands are disabled in automatic mode[/yellow]"
@@ -131,10 +193,7 @@ class AVLTreeCLI:
                     return
 
                 # Handle different command formats
-                if cmd == "rotate":
-                    direction = args[0]
-                    value = int(args[1])
-                elif cmd == "rr":
+                if cmd == "rr":
                     direction = "right"
                     value = int(args[0])
                 elif cmd == "rl":
@@ -941,12 +1000,10 @@ class AVLTreeCLI:
 
     def show_help(self):
         rprint("[bold]Commands:[/bold]")
-        rprint("  add <value>  (a)      - Add a node")
-        rprint("  remove <value>  (r)   - Remove a node")
-        rprint("  rotate left <value>   - Left rotation")
-        rprint("  rotate right <value>  - Right rotation")
-        rprint("  rl <value>            - Left rotation (shortcut)")
-        rprint("  rr <value>            - Right rotation (shortcut)")
+        rprint("  a <value>             - Add a node")
+        rprint("  d <value>             - Delete a node")
+        rprint("  rl <value>            - Left rotation")
+        rprint("  rr <value>            - Right rotation")
         rprint("  tree                  - Display current tree")
         rprint("  clear                 - Clear screen")
         rprint("  reset                 - Reset tree and history")
@@ -959,6 +1016,9 @@ class AVLTreeCLI:
         rprint("  postorder             - Show postorder traversal")
         rprint("  help                  - Show this")
         rprint("  exit                  - Quit")
+        rprint("\n[bold]Multiple Commands:[/bold]")
+        rprint("  You can chain commands: 'a 10 a 20 d 10'")
+        rprint("  Example: 'a 10 a 20 a 30 a 40 a 50' adds multiple nodes")
         rprint("\n[bold]Configuration:[/bold]")
         rprint("  config autoshow on/off    - Toggle auto-show tree")
         rprint("  config steps on/off       - Toggle show rotation steps")
