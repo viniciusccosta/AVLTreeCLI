@@ -102,6 +102,13 @@ class AVLTreeCLI:
             if cmd == "a" and len(args) == 1:
                 value = int(args[0])
 
+                # Check if value is within allowed range (-99 to 999)
+                if value < -99 or value > 999:
+                    rprint(
+                        f"[red]Value {value} is out of range! Please use values from -99 to 999 to maintain grid formatting.[/red]"
+                    )
+                    return
+
                 # Check if value already exists in the tree
                 if self.tree.search(value):
                     rprint(
@@ -139,6 +146,13 @@ class AVLTreeCLI:
 
             elif cmd == "d" and len(args) == 1:
                 value = int(args[0])
+
+                # Check if value is within allowed range (-99 to 999)
+                if value < -99 or value > 999:
+                    rprint(
+                        f"[red]Value {value} is out of range! Please use values from -99 to 999.[/red]"
+                    )
+                    return
 
                 # Check if value exists in the tree before trying to remove it
                 if not self.tree.search(value):
@@ -189,6 +203,13 @@ class AVLTreeCLI:
                 elif cmd == "rl":
                     direction = "left"
                     value = int(args[0])
+
+                # Check if value is within allowed range (-99 to 999)
+                if value < -99 or value > 999:
+                    rprint(
+                        f"[red]Value {value} is out of range! Please use values from -99 to 999.[/red]"
+                    )
+                    return
 
                 node = self.tree.search(value)
                 if not node:
@@ -528,7 +549,7 @@ class AVLTreeCLI:
                 rprint("[yellow]After insertion (before balancing):[/yellow]")
                 self.display_tree()
                 rprint(
-                    f"[yellow]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {self.tree.get_balance(unbalanced_node)}[/yellow]"
+                    f"[red]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {self.tree.get_balance(unbalanced_node)}[/]"
                 )
 
         # Now check and apply rotations step by step
@@ -546,7 +567,7 @@ class AVLTreeCLI:
                 rprint("[yellow]After deletion (before balancing):[/yellow]")
                 self.display_tree()
                 rprint(
-                    f"[yellow]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {self.tree.get_balance(unbalanced_node)}[/yellow]"
+                    f"[red]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {self.tree.get_balance(unbalanced_node)}[/]"
                 )
 
         # Now check and apply rotations step by step
@@ -836,7 +857,7 @@ class AVLTreeCLI:
         if unbalanced_node:
             balance = self.tree.get_balance(unbalanced_node)
             rprint(
-                f"[yellow]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {balance}[/yellow]"
+                f"[red]Tree is unbalanced! Node {unbalanced_node.value} has balance factor {balance}[/]"
             )
             rprint(
                 "[yellow]Use 'hint' command if you need guidance on how to balance it.[/yellow]"
@@ -1018,8 +1039,8 @@ class AVLTreeCLI:
 
     def show_help(self):
         rprint("[bold]Commands:[/bold]")
-        rprint("  a <value>             - Add a node")
-        rprint("  d <value>             - Delete a node")
+        rprint("  a <value>             - Add a node (values: -99 to 999)")
+        rprint("  d <value>             - Delete a node (values: -99 to 999)")
         rprint("  rl <value>            - Left rotation")
         rprint("  rr <value>            - Right rotation")
         rprint("  tree                  - Display current tree")
