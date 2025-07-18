@@ -7,8 +7,6 @@ from .avl_tree import AVLTree, Node
 class AVLTreeCLI:
     def __init__(self):
         self.tree = AVLTree()
-        self.history = []
-        self.undo_stack = []
         self.console = Console()
 
         # Configuration settings
@@ -60,8 +58,6 @@ class AVLTreeCLI:
                 "tree",
                 "clear",
                 "reset",
-                "undo",
-                "redo",
                 "status",
                 "hint",
                 "preorder",
@@ -130,8 +126,6 @@ class AVLTreeCLI:
                     # In practice mode, insert without auto-balancing
                     self.tree.root = self._insert_manual(self.tree.root, value)
                     self._check_balance_and_guide()
-                self.history.append(command)
-                self.undo_stack = []
                 rprint(f"[green]Added {value} to the tree[/green]")
                 if self.auto_show_tree:
                     self.display_tree()
@@ -170,8 +164,6 @@ class AVLTreeCLI:
                     # In practice mode, delete without auto-balancing
                     self.tree.root = self._delete_manual(self.tree.root, value)
                     self._check_balance_and_guide()
-                self.history.append(command)
-                self.undo_stack = []
                 rprint(f"[green]Removed {value} from the tree[/green]")
                 if self.auto_show_tree:
                     self.display_tree()
@@ -236,8 +228,6 @@ class AVLTreeCLI:
                 self.recently_added = None
                 self.recently_removed = None
 
-                self.history.append(command)
-                self.undo_stack = []
                 if self.auto_show_tree:
                     self.display_tree()
 
@@ -266,26 +256,7 @@ class AVLTreeCLI:
                 self.tree = AVLTree()
                 self.recently_added = None
                 self.recently_removed = None
-                self.history = []
-                self.undo_stack = []
-                rprint("[green]Tree and history reset[/green]")
-                if self.auto_show_tree:
-                    self.display_tree()
-
-            elif cmd == "undo" and self.history:
-                last = self.history.pop()
-                self.undo_stack.append(last)
-                self.tree = AVLTree()  # Basic reset; reapply history minus last
-                for cmd in self.history:
-                    self.process_command(cmd)
-                rprint("[green]Undid last action[/green]")
-                if self.auto_show_tree:
-                    self.display_tree()
-
-            elif cmd == "redo" and self.undo_stack:
-                cmd = self.undo_stack.pop()
-                self.process_command(cmd)
-                rprint("[green]Redid action[/green]")
+                rprint("[green]Tree reset[/green]")
                 if self.auto_show_tree:
                     self.display_tree()
 
@@ -1053,9 +1024,7 @@ class AVLTreeCLI:
         rprint("  rr <value>            - Right rotation")
         rprint("  tree                  - Display current tree")
         rprint("  clear                 - Clear screen")
-        rprint("  reset                 - Reset tree and history")
-        rprint("  undo                  - Undo last action")
-        rprint("  redo                  - Redo undone action")
+        rprint("  reset                 - Reset tree")
         rprint("  status                - Show configuration and tree status")
         rprint("  hint                  - Show balancing hints (practice mode)")
         rprint("  preorder              - Show preorder traversal")
