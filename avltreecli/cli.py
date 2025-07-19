@@ -167,40 +167,38 @@ class AVLTreeCLI:
                     )
                     return
 
-                # Check if value already exists in the tree
-                if self.tree.search(value):
-                    rprint(
-                        f"[red]Value {value} already exists in the tree! Cannot add duplicates.[/red]"
-                    )
-                    return
-
                 self.recently_added = value  # Track the recently added node
                 self.recently_removed = None  # Clear recently removed
-                if self.mode == "automatic":
-                    self._insert_with_auto_balance(value)
-                elif self.mode == "practice":
-                    # Check if tree is already unbalanced
-                    if self._find_unbalanced_node(self.tree.root):
-                        rprint(
-                            "[yellow]Tree is currently unbalanced! Please balance it first before adding new nodes.[/yellow]"
-                        )
-                        rprint(
-                            "[yellow]Use 'hint' command for guidance on how to balance it.[/yellow]"
-                        )
-                        return
-                    # In practice mode, insert without auto-balancing
-                    self.tree.root = self._insert_manual(self.tree.root, value)
-                    self._check_balance_and_guide()
-                rprint(f"[green]Added {value} to the tree[/green]")
-                if self.auto_show_tree:
-                    self.display_tree()
 
-                # In automatic mode, clear recently added tracking after final display
-                # only if the tree is balanced (so green shows during steps but clears after)
-                if self.mode == "automatic" and not self._find_unbalanced_node(
-                    self.tree.root
-                ):
-                    self.recently_added = None
+                try:
+                    if self.mode == "automatic":
+                        self._insert_with_auto_balance(value)
+                    elif self.mode == "practice":
+                        # Check if tree is already unbalanced
+                        if self._find_unbalanced_node(self.tree.root):
+                            rprint(
+                                "[yellow]Tree is currently unbalanced! Please balance it first before adding new nodes.[/yellow]"
+                            )
+                            rprint(
+                                "[yellow]Use 'hint' command for guidance on how to balance it.[/yellow]"
+                            )
+                            return
+                        # In practice mode, insert without auto-balancing
+                        self.tree.root = self._insert_manual(self.tree.root, value)
+                        self._check_balance_and_guide()
+                    rprint(f"[green]Added {value} to the tree[/green]")
+                    if self.auto_show_tree:
+                        self.display_tree()
+
+                    # In automatic mode, clear recently added tracking after final display
+                    # only if the tree is balanced (so green shows during steps but clears after)
+                    if self.mode == "automatic" and not self._find_unbalanced_node(
+                        self.tree.root
+                    ):
+                        self.recently_added = None
+                except ValueError as e:
+                    rprint(f"[red]{str(e)}[/red]")
+                    self.recently_added = None  # Clear tracking on error
 
             elif cmd == "d" and len(args) == 1:
                 value = int(args[0])
@@ -212,40 +210,38 @@ class AVLTreeCLI:
                     )
                     return
 
-                # Check if value exists in the tree before trying to remove it
-                if not self.tree.search(value):
-                    rprint(
-                        f"[red]Value {value} not found in the tree! Cannot remove.[/red]"
-                    )
-                    return
-
                 self.recently_removed = value  # Track the recently removed node
                 self.recently_added = None  # Clear recently added
-                if self.mode == "automatic":
-                    self._delete_with_auto_balance(value)
-                elif self.mode == "practice":
-                    # Check if tree is already unbalanced
-                    if self._find_unbalanced_node(self.tree.root):
-                        rprint(
-                            "[yellow]Tree is currently unbalanced! Please balance it first before removing nodes.[/yellow]"
-                        )
-                        rprint(
-                            "[yellow]Use 'hint' command for guidance on how to balance it.[/yellow]"
-                        )
-                        return
-                    # In practice mode, delete without auto-balancing
-                    self.tree.root = self._delete_manual(self.tree.root, value)
-                    self._check_balance_and_guide()
-                rprint(f"[green]Removed {value} from the tree[/green]")
-                if self.auto_show_tree:
-                    self.display_tree()
 
-                # In automatic mode, clear recently removed tracking after final display
-                # only if the tree is balanced (so coloring shows during steps but clears after)
-                if self.mode == "automatic" and not self._find_unbalanced_node(
-                    self.tree.root
-                ):
-                    self.recently_removed = None
+                try:
+                    if self.mode == "automatic":
+                        self._delete_with_auto_balance(value)
+                    elif self.mode == "practice":
+                        # Check if tree is already unbalanced
+                        if self._find_unbalanced_node(self.tree.root):
+                            rprint(
+                                "[yellow]Tree is currently unbalanced! Please balance it first before removing nodes.[/yellow]"
+                            )
+                            rprint(
+                                "[yellow]Use 'hint' command for guidance on how to balance it.[/yellow]"
+                            )
+                            return
+                        # In practice mode, delete without auto-balancing
+                        self.tree.root = self._delete_manual(self.tree.root, value)
+                        self._check_balance_and_guide()
+                    rprint(f"[green]Removed {value} from the tree[/green]")
+                    if self.auto_show_tree:
+                        self.display_tree()
+
+                    # In automatic mode, clear recently removed tracking after final display
+                    # only if the tree is balanced (so coloring shows during steps but clears after)
+                    if self.mode == "automatic" and not self._find_unbalanced_node(
+                        self.tree.root
+                    ):
+                        self.recently_removed = None
+                except ValueError as e:
+                    rprint(f"[red]{str(e)}[/red]")
+                    self.recently_removed = None  # Clear tracking on error
 
             elif cmd in ["rr", "rl"] and len(args) == 1:
                 if self.mode == "automatic":
@@ -1373,8 +1369,7 @@ class AVLTreeCLI:
             rprint("[yellow]Tree is empty[/yellow]")
             return
 
-        traversal = []
-        self._preorder_traversal(self.tree.root, traversal)
+        traversal = self.tree.preorder_traversal()
         rprint(f"[bold]Preorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
 
     def _show_inorder(self) -> None:
@@ -1387,8 +1382,7 @@ class AVLTreeCLI:
             rprint("[yellow]Tree is empty[/yellow]")
             return
 
-        traversal = []
-        self._inorder_traversal(self.tree.root, traversal)
+        traversal = self.tree.inorder_traversal()
         rprint(f"[bold]Inorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
 
     def _show_postorder(self) -> None:
@@ -1401,48 +1395,8 @@ class AVLTreeCLI:
             rprint("[yellow]Tree is empty[/yellow]")
             return
 
-        traversal = []
-        self._postorder_traversal(self.tree.root, traversal)
+        traversal = self.tree.postorder_traversal()
         rprint(f"[bold]Postorder traversal:[/bold] {' -> '.join(map(str, traversal))}")
-
-    def _preorder_traversal(self, node: Optional[Node], traversal: List[int]) -> None:
-        """
-        Perform preorder traversal: root -> left -> right.
-
-        Args:
-            node (Optional[Node]): Current node being visited
-            traversal (List[int]): List to store traversal results
-        """
-        if node:
-            traversal.append(node.value)
-            self._preorder_traversal(node.left, traversal)
-            self._preorder_traversal(node.right, traversal)
-
-    def _inorder_traversal(self, node: Optional[Node], traversal: List[int]) -> None:
-        """
-        Perform inorder traversal: left -> root -> right.
-
-        Args:
-            node (Optional[Node]): Current node being visited
-            traversal (List[int]): List to store traversal results
-        """
-        if node:
-            self._inorder_traversal(node.left, traversal)
-            traversal.append(node.value)
-            self._inorder_traversal(node.right, traversal)
-
-    def _postorder_traversal(self, node: Optional[Node], traversal: List[int]) -> None:
-        """
-        Perform postorder traversal: left -> right -> root.
-
-        Args:
-            node (Optional[Node]): Current node being visited
-            traversal (List[int]): List to store traversal results
-        """
-        if node:
-            self._postorder_traversal(node.left, traversal)
-            self._postorder_traversal(node.right, traversal)
-            traversal.append(node.value)
 
 
 def main() -> None:

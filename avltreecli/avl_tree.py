@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 
 class Node:
@@ -44,8 +44,13 @@ class AVLTree:
         """
         Insert a value into the AVL tree.
 
+        Duplicates are not allowed in the AVL tree.
+
         Args:
             value (int): The value to insert into the tree
+
+        Raises:
+            ValueError: If the value already exists in the tree
         """
         self.root = self._insert(self.root, value)
 
@@ -64,8 +69,10 @@ class AVLTree:
             return Node(value)
         elif value < node.value:
             node.left = self._insert(node.left, value)
-        else:
+        elif value > node.value:
             node.right = self._insert(node.right, value)
+        else:
+            raise ValueError("Duplicate values are not allowed in AVL Tree")
 
         # Update height and rebalance
         node.height = 1 + max(self.get_height(node.left), self.get_height(node.right))
@@ -97,6 +104,9 @@ class AVLTree:
 
         Args:
             value (int): The value to delete from the tree
+
+        Raises:
+            ValueError: If the value is not found in the tree
         """
         self.root = self._delete(self.root, value)
 
@@ -110,9 +120,14 @@ class AVLTree:
 
         Returns:
             Optional[Node]: The new root of the subtree after deletion and balancing
+
+        Raises:
+            ValueError: If the value is not found in the tree
         """
+
         if not node:
-            return node
+            # Value not found - raise an exception
+            raise ValueError(f"Value {value} not found in the tree")
         elif value < node.value:
             node.left = self._delete(node.left, value)
         elif value > node.value:
@@ -269,3 +284,101 @@ class AVLTree:
         if value < node.value:
             return self._search(node.left, value)
         return self._search(node.right, value)
+
+    def _is_balanced(self, node: Optional[Node]) -> bool:
+        """
+        Check if the subtree rooted at node is balanced.
+
+        Args:
+            node (Optional[Node]): The root of the subtree to check
+
+        Returns:
+            bool: True if the subtree is balanced, False otherwise
+        """
+        if not node:
+            return True
+
+        balance = self.get_balance(node)
+        return (
+            abs(balance) <= 1
+            and self._is_balanced(node.left)
+            and self._is_balanced(node.right)
+        )
+
+    def preorder_traversal(self) -> List[int]:
+        """
+        Perform preorder traversal of the tree.
+
+        Returns nodes in root -> left -> right order.
+
+        Returns:
+            List[int]: List of values in preorder traversal order
+        """
+        result = []
+        self._preorder_traversal(self.root, result)
+        return result
+
+    def inorder_traversal(self) -> List[int]:
+        """
+        Perform inorder traversal of the tree.
+
+        Returns nodes in left -> root -> right order (sorted order for BST).
+
+        Returns:
+            List[int]: List of values in inorder traversal order (sorted)
+        """
+        result = []
+        self._inorder_traversal(self.root, result)
+        return result
+
+    def postorder_traversal(self) -> List[int]:
+        """
+        Perform postorder traversal of the tree.
+
+        Returns nodes in left -> right -> root order.
+
+        Returns:
+            List[int]: List of values in postorder traversal order
+        """
+        result = []
+        self._postorder_traversal(self.root, result)
+        return result
+
+    def _preorder_traversal(self, node: Optional[Node], result: List[int]) -> None:
+        """
+        Helper method for preorder traversal: root -> left -> right.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            result (List[int]): List to store traversal results
+        """
+        if node:
+            result.append(node.value)
+            self._preorder_traversal(node.left, result)
+            self._preorder_traversal(node.right, result)
+
+    def _inorder_traversal(self, node: Optional[Node], result: List[int]) -> None:
+        """
+        Helper method for inorder traversal: left -> root -> right.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            result (List[int]): List to store traversal results
+        """
+        if node:
+            self._inorder_traversal(node.left, result)
+            result.append(node.value)
+            self._inorder_traversal(node.right, result)
+
+    def _postorder_traversal(self, node: Optional[Node], result: List[int]) -> None:
+        """
+        Helper method for postorder traversal: left -> right -> root.
+
+        Args:
+            node (Optional[Node]): Current node being visited
+            result (List[int]): List to store traversal results
+        """
+        if node:
+            self._postorder_traversal(node.left, result)
+            self._postorder_traversal(node.right, result)
+            result.append(node.value)
