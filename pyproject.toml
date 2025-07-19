@@ -14,6 +14,8 @@ dependencies = [
 [tool.poetry.group.docs.dependencies]
 pdoc3 = "^0.11.6"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
 
 [project.urls]
 Homepage = "https://github.com/viniciusccosta/AVLTreeCLI"
