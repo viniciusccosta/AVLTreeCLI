@@ -12,8 +12,6 @@ Tests cover all core functionality including:
 - Edge cases and error conditions
 """
 
-from typing import List, Optional
-
 import pytest
 
 from avltreecli.avl_tree import AVLTree, Node
